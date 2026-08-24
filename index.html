@@ -35,7 +35,6 @@
       align-items: center;
 
       min-height: 100vh;
-
       overflow: hidden;
 
       font-family: Arial, Helvetica, sans-serif;
@@ -63,7 +62,6 @@
 
     .scene.ready {
       opacity: 1;
-
       transform: scale(1);
     }
 
@@ -82,6 +80,8 @@
       transition: transform 0.8s ease;
 
       -webkit-tap-highlight-color: transparent;
+
+      touch-action: manipulation;
     }
 
     .face {
@@ -129,7 +129,6 @@
       pointer-events: none;
 
       user-select: none;
-
       -webkit-user-drag: none;
     }
 
@@ -251,7 +250,6 @@
 
     .rsvp-hint {
       font-size: 1.05em;
-
       font-weight: bold;
 
       color: #444;
@@ -275,12 +273,11 @@
       gap: 10px;
 
       justify-content: center;
-
       flex-wrap: wrap;
 
       position: relative;
 
-      z-index: 20;
+      z-index: 50;
     }
 
     .buttons.show {
@@ -289,7 +286,6 @@
 
     .buttons button {
       display: flex;
-
       align-items: center;
 
       gap: 6px;
@@ -308,22 +304,20 @@
 
       -webkit-tap-highlight-color: transparent;
 
+      touch-action: manipulation;
+
       position: relative;
 
-      z-index: 21;
-
-      touch-action: manipulation;
+      z-index: 51;
     }
 
     .attend {
       background-color: #695791;
-
       color: white;
     }
 
     .decline {
       background-color: #e96485;
-
       color: white;
     }
 
@@ -390,7 +384,6 @@
         pointer-events: none;
 
         user-select: none;
-
         -webkit-user-drag: none;
       }
     }
@@ -442,7 +435,6 @@
       pointer-events: none;
 
       user-select: none;
-
       -webkit-user-drag: none;
     }
 
@@ -505,19 +497,16 @@
     @media (max-width: 500px) {
       .envelope {
         width: 300px;
-
         height: 216px;
       }
 
       .card {
         width: 265px;
-
         height: 379px;
       }
 
       .invite-title {
         width: 80%;
-
         max-width: 225px;
       }
     }
@@ -618,6 +607,7 @@
 
       <button
         class="attend"
+        id="attendButton"
         type="button"
       >
         Attending
@@ -625,6 +615,7 @@
 
       <button
         class="decline"
+        id="declineButton"
         type="button"
       >
         Not Attending
@@ -635,7 +626,6 @@
   </div>
 
   <script>
-
     /* =====================================================
        ELEMENTS
        ===================================================== */
@@ -659,10 +649,10 @@
       document.getElementById("touchRocket");
 
     const attendButton =
-      document.querySelector(".attend");
+      document.getElementById("attendButton");
 
     const declineButton =
-      document.querySelector(".decline");
+      document.getElementById("declineButton");
 
 
     /* =====================================================
@@ -685,7 +675,6 @@
 
     /* =====================================================
        MOBILE TOUCH ROCKET
-       POINTER EVENTS DO NOT BLOCK NORMAL TAPS
        ===================================================== */
 
     function moveTouchRocket(x, y) {
@@ -699,110 +688,111 @@
     }
 
 
-    /* FINGER DOWN */
+    function startTouchRocket(e) {
+
+      if (e.pointerType !== "touch") {
+        return;
+      }
+
+      moveTouchRocket(
+        e.clientX,
+        e.clientY
+      );
+
+      touchRocket.classList.remove(
+        "launch"
+      );
+
+      touchRocket.classList.add(
+        "touching"
+      );
+
+    }
+
+
+    function moveTouchRocketEvent(e) {
+
+      if (e.pointerType !== "touch") {
+        return;
+      }
+
+      moveTouchRocket(
+        e.clientX,
+        e.clientY
+      );
+
+    }
+
+
+    function finishTouchRocket(e) {
+
+      if (e.pointerType !== "touch") {
+        return;
+      }
+
+      touchRocket.classList.remove(
+        "touching"
+      );
+
+      touchRocket.classList.remove(
+        "launch"
+      );
+
+      void touchRocket.offsetWidth;
+
+      touchRocket.classList.add(
+        "launch"
+      );
+
+      setTimeout(
+        () => {
+
+          touchRocket.classList.remove(
+            "launch"
+          );
+
+        },
+        380
+      );
+
+    }
+
+
+    function cancelTouchRocket(e) {
+
+      if (e.pointerType !== "touch") {
+        return;
+      }
+
+      touchRocket.classList.remove(
+        "touching"
+      );
+
+      touchRocket.classList.remove(
+        "launch"
+      );
+
+    }
+
 
     document.addEventListener(
       "pointerdown",
-      (e) => {
-
-        if (e.pointerType !== "touch") {
-          return;
-        }
-
-        moveTouchRocket(
-          e.clientX,
-          e.clientY
-        );
-
-        touchRocket.classList.remove(
-          "launch"
-        );
-
-        touchRocket.classList.add(
-          "touching"
-        );
-
-      }
+      startTouchRocket
     );
-
-
-    /* FINGER MOVES */
 
     document.addEventListener(
       "pointermove",
-      (e) => {
-
-        if (e.pointerType !== "touch") {
-          return;
-        }
-
-        moveTouchRocket(
-          e.clientX,
-          e.clientY
-        );
-
-      }
+      moveTouchRocketEvent
     );
-
-
-    /* FINGER LIFTS */
 
     document.addEventListener(
       "pointerup",
-      (e) => {
-
-        if (e.pointerType !== "touch") {
-          return;
-        }
-
-        touchRocket.classList.remove(
-          "touching"
-        );
-
-        touchRocket.classList.remove(
-          "launch"
-        );
-
-        void touchRocket.offsetWidth;
-
-        touchRocket.classList.add(
-          "launch"
-        );
-
-        setTimeout(
-          () => {
-
-            touchRocket.classList.remove(
-              "launch"
-            );
-
-          },
-          380
-        );
-
-      }
+      finishTouchRocket
     );
-
-
-    /* TOUCH CANCEL */
 
     document.addEventListener(
       "pointercancel",
-      (e) => {
-
-        if (e.pointerType !== "touch") {
-          return;
-        }
-
-        touchRocket.classList.remove(
-          "touching"
-        );
-
-        touchRocket.classList.remove(
-          "launch"
-        );
-
-      }
+      cancelTouchRocket
     );
 
 
@@ -810,8 +800,7 @@
        OPEN INVITATION
        ===================================================== */
 
-    let invitationOpening =
-      false;
+    let invitationOpening = false;
 
     function openInvitation() {
 
@@ -824,13 +813,11 @@
 
       invitationOpening = true;
 
-
       /* FLIP ENVELOPE */
 
       scene.classList.add(
         "spin"
       );
-
 
       /* OPEN FLAP */
 
@@ -844,7 +831,6 @@
         },
         800
       );
-
 
       /* PULL CARD OUT */
 
@@ -870,12 +856,11 @@
 
 
     /* =====================================================
-       ENVELOPE CLICK
-       WORKS ON DESKTOP + MOBILE
+       ENVELOPE INTERACTION
        ===================================================== */
 
     envelope.addEventListener(
-      "click",
+      "pointerup",
       (e) => {
 
         e.stopPropagation();
@@ -887,17 +872,11 @@
 
 
     /* =====================================================
-       RSVP TEXT MESSAGE
+       RSVP
        ===================================================== */
 
     const phone =
       "+16166489671";
-
-    const ua =
-      navigator.userAgent || "";
-
-    const isIOS =
-      /iPad|iPhone|iPod/.test(ua);
 
 
     function sendRSVP(status) {
@@ -907,6 +886,12 @@
 
       const encoded =
         encodeURIComponent(body);
+
+      const ua =
+        navigator.userAgent || "";
+
+      const isIOS =
+        /iPad|iPhone|iPod/.test(ua);
 
       const link =
         isIOS
@@ -936,11 +921,10 @@
        ===================================================== */
 
     attendButton.addEventListener(
-      "click",
+      "pointerup",
       (e) => {
 
         e.preventDefault();
-
         e.stopPropagation();
 
         sendRSVP(
@@ -956,11 +940,10 @@
        ===================================================== */
 
     declineButton.addEventListener(
-      "click",
+      "pointerup",
       (e) => {
 
         e.preventDefault();
-
         e.stopPropagation();
 
         sendRSVP(
