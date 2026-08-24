@@ -7,14 +7,21 @@
   <title>CHARLIE'S 7TH BDAY</title>
 
   <meta property="og:title" content="CHARLIE'S 7TH BDAY" />
+
   <meta
     property="og:description"
     content="You're invited to Charlie's 7th Birthday! Tap to RSVP."
   />
-  <meta property="og:image" content="https://i.imgur.com/nbBLGks.png" />
+
+  <meta
+    property="og:image"
+    content="https://i.imgur.com/nbBLGks.png"
+  />
+
   <meta property="og:type" content="website" />
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -23,6 +30,7 @@
     body {
       width: 100%;
       height: 100%;
+
       margin: 0;
       padding: 0;
     }
@@ -31,6 +39,7 @@
       background: #f0f2f7;
 
       display: flex;
+
       justify-content: center;
       align-items: center;
 
@@ -38,10 +47,12 @@
 
       overflow: hidden;
 
-      font-family: Arial, Helvetica, sans-serif;
-
-      touch-action: manipulation;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
     }
+
 
     /* =====================================================
        MAIN SCENE
@@ -69,6 +80,7 @@
       transform: scale(1);
     }
 
+
     /* =====================================================
        ENVELOPE
        ===================================================== */
@@ -82,6 +94,8 @@
       transform-style: preserve-3d;
 
       transition: transform 0.8s ease;
+
+      -webkit-tap-highlight-color: transparent;
     }
 
     .face {
@@ -91,26 +105,35 @@
       height: 100%;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
       backface-visibility: hidden;
+
       -webkit-backface-visibility: hidden;
 
       border-radius: 6px;
 
       box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.2);
+        0 6px 15px
+        rgba(0, 0, 0, 0.2);
     }
+
 
     /* =====================================================
        FRONT OF ENVELOPE
        ===================================================== */
 
     .front {
-      background: linear-gradient(#ffffff, #f3f4f6);
+      background:
+        linear-gradient(
+          #ffffff,
+          #f3f4f6
+        );
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
@@ -121,7 +144,9 @@
       display: block;
 
       width: 78%;
+
       max-width: 245px;
+
       height: auto;
 
       object-fit: contain;
@@ -133,17 +158,24 @@
       -webkit-user-drag: none;
     }
 
+
     /* =====================================================
        BACK OF ENVELOPE
        ===================================================== */
 
     .back {
-      transform: rotateY(180deg);
+      transform:
+        rotateY(180deg);
 
-      background: linear-gradient(#ffffff, #f3f4f6);
+      background:
+        linear-gradient(
+          #ffffff,
+          #f3f4f6
+        );
 
       overflow: visible;
     }
+
 
     /* =====================================================
        ENVELOPE FLAP
@@ -158,20 +190,34 @@
       width: 100%;
       height: 45%;
 
-      background: linear-gradient(#ffffff, #e6e7eb);
+      background:
+        linear-gradient(
+          #ffffff,
+          #e6e7eb
+        );
 
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      clip-path:
+        polygon(
+          0 0,
+          100% 0,
+          50% 100%
+        );
 
-      transform-origin: top center;
+      transform-origin:
+        top center;
 
-      transition: transform 0.8s ease;
+      transition:
+        transform 0.8s ease;
 
       z-index: 2;
 
       box-shadow:
-        inset 0 -3px 5px rgba(0, 0, 0, 0.15),
-        0 3px 6px rgba(0, 0, 0, 0.2);
+        inset 0 -3px 5px
+        rgba(0, 0, 0, 0.15),
+        0 3px 6px
+        rgba(0, 0, 0, 0.2);
     }
+
 
     /* =====================================================
        ENVELOPE POCKET
@@ -186,8 +232,10 @@
       width: 100%;
       height: 55%;
 
-      background: #f8f9fb;
+      background:
+        #f8f9fb;
     }
+
 
     /* =====================================================
        INVITATION CARD
@@ -204,7 +252,8 @@
       left: 50%;
       top: 90%;
 
-      transform: translate(-50%, 0);
+      transform:
+        translate(-50%, 0);
 
       opacity: 0;
 
@@ -213,7 +262,8 @@
         opacity 0.4s ease;
 
       box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.18);
+        0 8px 20px
+        rgba(0, 0, 0, 0.18);
 
       z-index: 3;
     }
@@ -227,23 +277,31 @@
       object-fit: contain;
     }
 
+
     /* =====================================================
        ENVELOPE ANIMATION
        ===================================================== */
 
     .scene.spin .envelope {
-      transform: rotateY(180deg);
+      transform:
+        rotateY(180deg);
     }
 
     .scene.open .flap {
-      transform: rotateX(-160deg);
+      transform:
+        rotateX(-160deg);
     }
 
     .scene.slide .card {
       opacity: 1;
 
-      transform: translate(-50%, -120%);
+      transform:
+        translate(
+          -50%,
+          -120%
+        );
     }
+
 
     /* =====================================================
        RSVP HINT
@@ -256,12 +314,15 @@
 
       color: #444;
 
-      margin: 12px 0 6px;
+      margin:
+        12px 0 6px;
 
       opacity: 0;
 
-      transition: opacity 0.4s ease;
+      transition:
+        opacity 0.4s ease;
     }
+
 
     /* =====================================================
        RSVP BUTTONS
@@ -290,7 +351,8 @@
 
       gap: 6px;
 
-      padding: 10px 15px;
+      padding:
+        10px 15px;
 
       font-size: 1em;
 
@@ -302,51 +364,78 @@
         box-shadow 0.3s ease,
         transform 0.2s ease;
 
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color:
+        transparent;
     }
 
     .attend {
-      background-color: #695791;
+      background-color:
+        #695791;
 
       color: white;
     }
 
     .decline {
-      background-color: #e96485;
+      background-color:
+        #e96485;
 
       color: white;
     }
 
-    @media (hover: hover) and (pointer: fine) {
+    @media
+      (hover: hover)
+      and
+      (pointer: fine) {
+
       .buttons button:hover {
         box-shadow:
-          0 0 15px rgba(255, 215, 0, 0.7);
+          0 0 15px
+          rgba(
+            255,
+            215,
+            0,
+            0.7
+          );
 
-        transform: scale(1.05);
+        transform:
+          scale(1.05);
       }
     }
 
     .buttons button:active {
-      transform: scale(0.97);
+      transform:
+        scale(0.97);
 
       box-shadow:
-        0 0 12px rgba(255, 215, 0, 0.6);
+        0 0 12px
+        rgba(
+          255,
+          215,
+          0,
+          0.6
+        );
     }
 
+
     /* =====================================================
-       CUSTOM DESKTOP ROCKET CURSOR
+       DESKTOP ROCKET CURSOR
        ===================================================== */
 
     #rocketCursor {
       display: none;
     }
 
-    @media (hover: hover) and (pointer: fine) {
+    @media
+      (hover: hover)
+      and
+      (pointer: fine) {
+
       html,
       body,
       body *,
       button {
-        cursor: none !important;
+        cursor:
+          none !important;
       }
 
       #rocketCursor {
@@ -364,9 +453,15 @@
 
         z-index: 999999;
 
-        transform: translate(-50%, -50%);
+        transform:
+          translate(
+            -50%,
+            -50%
+          );
 
-        will-change: left, top;
+        will-change:
+          left,
+          top;
       }
 
       #rocketCursor img {
@@ -385,11 +480,16 @@
       }
     }
 
-    @media (hover: none), (pointer: coarse) {
+    @media
+      (hover: none),
+      (pointer: coarse) {
+
       #rocketCursor {
-        display: none !important;
+        display:
+          none !important;
       }
     }
+
 
     /* =====================================================
        MOBILE TOUCH ROCKET
@@ -412,7 +512,11 @@
 
       opacity: 0;
 
-      transform: translate(-50%, -50%);
+      transform:
+        translate(
+          -50%,
+          -50%
+        );
 
       will-change:
         left,
@@ -436,7 +540,10 @@
       -webkit-user-drag: none;
     }
 
-    @media (hover: none), (pointer: coarse) {
+    @media
+      (hover: none),
+      (pointer: coarse) {
+
       #touchRocket {
         display: block;
       }
@@ -445,7 +552,10 @@
         opacity: 1;
 
         transform:
-          translate(-50%, -50%)
+          translate(
+            -50%,
+            -50%
+          )
           scale(1);
       }
 
@@ -458,12 +568,22 @@
       }
     }
 
-    @keyframes touchRocketLaunch {
+
+    /* =====================================================
+       MOBILE ROCKET LAUNCH ANIMATION
+       ===================================================== */
+
+    @keyframes
+      touchRocketLaunch {
+
       0% {
         opacity: 1;
 
         transform:
-          translate(-50%, -50%)
+          translate(
+            -50%,
+            -50%
+          )
           scale(1);
       }
 
@@ -471,7 +591,10 @@
         opacity: 1;
 
         transform:
-          translate(-50%, -70%)
+          translate(
+            -50%,
+            -70%
+          )
           scale(1.12);
       }
 
@@ -479,16 +602,22 @@
         opacity: 0;
 
         transform:
-          translate(-50%, -125%)
+          translate(
+            -50%,
+            -125%
+          )
           scale(0.88);
       }
     }
+
 
     /* =====================================================
        MOBILE
        ===================================================== */
 
-    @media (max-width: 500px) {
+    @media
+      (max-width: 500px) {
+
       .envelope {
         width: 300px;
 
@@ -507,44 +636,62 @@
         max-width: 225px;
       }
     }
+
   </style>
 </head>
 
 <body>
 
+
   <!-- =====================================================
-       CUSTOM DESKTOP ROCKET CURSOR
+       DESKTOP ROCKET CURSOR
        ===================================================== -->
 
   <div id="rocketCursor">
+
     <img
       src="https://i.imgur.com/vkgyQTf.png"
       alt=""
     />
+
   </div>
+
 
   <!-- =====================================================
        MOBILE TOUCH ROCKET
        ===================================================== -->
 
   <div id="touchRocket">
+
     <img
       src="https://i.imgur.com/vkgyQTf.png"
       alt=""
     />
+
   </div>
+
 
   <!-- =====================================================
        INVITATION
        ===================================================== -->
 
-  <div class="scene ready" id="scene">
+  <div
+    class="scene ready"
+    id="scene"
+  >
 
-    <div class="envelope">
+
+    <div
+      class="envelope"
+      id="envelope"
+    >
+
 
       <!-- FRONT OF ENVELOPE -->
 
-      <div class="face front">
+      <div
+        class="face front"
+      >
 
         <img
           src="https://i.imgur.com/XF0hZiS.png"
@@ -554,21 +701,33 @@
 
       </div>
 
+
       <!-- BACK OF ENVELOPE -->
 
-      <div class="face back">
+      <div
+        class="face back"
+      >
 
-        <div class="flap"></div>
+        <div
+          class="flap"
+        ></div>
 
-        <div class="pocket"></div>
+        <div
+          class="pocket"
+        ></div>
 
       </div>
 
+
     </div>
+
 
     <!-- INVITATION CARD -->
 
-    <div class="card" id="card">
+    <div
+      class="card"
+      id="card"
+    >
 
       <img
         src="https://i.imgur.com/tLVLZo7.png"
@@ -576,6 +735,7 @@
       />
 
     </div>
+
 
     <!-- RSVP TEXT -->
 
@@ -586,6 +746,7 @@
       Tap to RSVP
     </div>
 
+
     <!-- RSVP BUTTONS -->
 
     <div
@@ -593,38 +754,60 @@
       id="buttons"
     >
 
-      <button class="attend">
+      <button
+        class="attend"
+      >
         Attending
       </button>
 
-      <button class="decline">
+      <button
+        class="decline"
+      >
         Not Attending
       </button>
 
     </div>
 
+
   </div>
 
+
   <script>
+
 
     /* =====================================================
        ELEMENTS
        ===================================================== */
 
     const scene =
-      document.getElementById("scene");
+      document.getElementById(
+        "scene"
+      );
+
+    const envelope =
+      document.getElementById(
+        "envelope"
+      );
 
     const buttons =
-      document.getElementById("buttons");
+      document.getElementById(
+        "buttons"
+      );
 
     const rsvpHint =
-      document.getElementById("rsvpHint");
+      document.getElementById(
+        "rsvpHint"
+      );
 
     const rocketCursor =
-      document.getElementById("rocketCursor");
+      document.getElementById(
+        "rocketCursor"
+      );
 
     const touchRocket =
-      document.getElementById("touchRocket");
+      document.getElementById(
+        "touchRocket"
+      );
 
 
     /* =====================================================
@@ -646,10 +829,11 @@
 
 
     /* =====================================================
-       MOBILE TOUCH ROCKET
+       MOBILE TOUCH ROCKET POSITION
        ===================================================== */
 
-    function moveTouchRocket(touch) {
+    function
+      moveTouchRocket(touch) {
 
       touchRocket.style.left =
         touch.clientX + "px";
@@ -675,15 +859,21 @@
           return;
         }
 
-        moveTouchRocket(touch);
-
-        touchRocket.classList.remove(
-          "launch"
+        moveTouchRocket(
+          touch
         );
 
-        touchRocket.classList.add(
-          "touching"
-        );
+        touchRocket
+          .classList
+          .remove(
+            "launch"
+          );
+
+        touchRocket
+          .classList
+          .add(
+            "touching"
+          );
 
       },
       {
@@ -707,7 +897,9 @@
           return;
         }
 
-        moveTouchRocket(touch);
+        moveTouchRocket(
+          touch
+        );
 
       },
       {
@@ -724,31 +916,35 @@
       "touchend",
       () => {
 
-        touchRocket.classList.remove(
-          "touching"
-        );
+        touchRocket
+          .classList
+          .remove(
+            "touching"
+          );
 
-        /*
-          Reset animation so it can
-          replay every single tap.
-        */
+        touchRocket
+          .classList
+          .remove(
+            "launch"
+          );
 
-        touchRocket.classList.remove(
-          "launch"
-        );
+        void
+          touchRocket.offsetWidth;
 
-        void touchRocket.offsetWidth;
-
-        touchRocket.classList.add(
-          "launch"
-        );
+        touchRocket
+          .classList
+          .add(
+            "launch"
+          );
 
         setTimeout(
           () => {
 
-            touchRocket.classList.remove(
-              "launch"
-            );
+            touchRocket
+              .classList
+              .remove(
+                "launch"
+              );
 
           },
           380
@@ -769,13 +965,17 @@
       "touchcancel",
       () => {
 
-        touchRocket.classList.remove(
-          "touching"
-        );
+        touchRocket
+          .classList
+          .remove(
+            "touching"
+          );
 
-        touchRocket.classList.remove(
-          "launch"
-        );
+        touchRocket
+          .classList
+          .remove(
+            "launch"
+          );
 
       },
       {
@@ -788,59 +988,112 @@
        OPEN INVITATION
        ===================================================== */
 
-    scene.addEventListener(
-      "click",
-      () => {
+    let invitationOpening =
+      false;
 
-        if (
-          !scene.classList.contains(
+    function
+      openInvitation() {
+
+      if (
+        invitationOpening ||
+        scene
+          .classList
+          .contains(
             "spin"
           )
-        ) {
+      ) {
+        return;
+      }
 
-          /* Flip envelope */
-
-          scene.classList.add(
-            "spin"
-          );
-
-
-          /* Open flap */
-
-          setTimeout(
-            () => {
-
-              scene.classList.add(
-                "open"
-              );
-
-            },
-            800
-          );
+      invitationOpening =
+        true;
 
 
-          /* Pull card from envelope */
+      /* FLIP ENVELOPE */
 
-          setTimeout(
-            () => {
+      scene
+        .classList
+        .add(
+          "spin"
+        );
 
-              scene.classList.add(
-                "slide"
-              );
 
-              buttons.classList.add(
-                "show"
-              );
+      /* OPEN FLAP */
 
-              rsvpHint.style.opacity =
-                "1";
+      setTimeout(
+        () => {
 
-            },
-            1600
-          );
+          scene
+            .classList
+            .add(
+              "open"
+            );
 
-        }
+        },
+        800
+      );
 
+
+      /* PULL CARD OUT */
+
+      setTimeout(
+        () => {
+
+          scene
+            .classList
+            .add(
+              "slide"
+            );
+
+          buttons
+            .classList
+            .add(
+              "show"
+            );
+
+          rsvpHint
+            .style
+            .opacity =
+              "1";
+
+        },
+        1600
+      );
+
+    }
+
+
+    /* =====================================================
+       DESKTOP CLICK
+       ===================================================== */
+
+    envelope.addEventListener(
+      "click",
+      (e) => {
+
+        e.stopPropagation();
+
+        openInvitation();
+
+      }
+    );
+
+
+    /* =====================================================
+       MOBILE TAP
+       ===================================================== */
+
+    envelope.addEventListener(
+      "touchend",
+      (e) => {
+
+        e.stopPropagation();
+
+        openInvitation();
+
+      },
+      {
+        passive: true
       }
     );
 
@@ -858,7 +1111,8 @@
         navigator.userAgent || "";
 
       const isIOS =
-        /iPad|iPhone|iPod/.test(ua);
+        /iPad|iPhone|iPod/
+          .test(ua);
 
 
       window.sendRSVP =
@@ -868,7 +1122,9 @@
             `RSVP: ${status} Charlie's 7th Birthday Party.`;
 
           const encoded =
-            encodeURIComponent(body);
+            encodeURIComponent(
+              body
+            );
 
           const link =
             isIOS
@@ -896,7 +1152,9 @@
       /* ATTENDING */
 
       document
-        .querySelector(".attend")
+        .querySelector(
+          ".attend"
+        )
         .addEventListener(
           "click",
           (e) => {
@@ -914,7 +1172,9 @@
       /* NOT ATTENDING */
 
       document
-        .querySelector(".decline")
+        .querySelector(
+          ".decline"
+        )
         .addEventListener(
           "click",
           (e) => {
@@ -929,6 +1189,7 @@
         );
 
     })();
+
 
   </script>
 
