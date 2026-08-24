@@ -126,6 +126,7 @@
 
       display: flex;
       align-items: center;
+      justify-content: center;
 
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
@@ -143,13 +144,25 @@
     .front {
       background: linear-gradient(#ffffff, #f3f4f6);
 
+      display: flex;
       align-items: center;
       justify-content: center;
 
-      font-size: 1.5em;
-      font-weight: bold;
+      padding: 18px;
+    }
 
-      color: #444;
+    .invite-title {
+      display: block;
+
+      width: 78%;
+      max-width: 245px;
+      height: auto;
+
+      object-fit: contain;
+
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     /* =====================================================
@@ -419,6 +432,11 @@
         width: 265px;
         height: 379px;
       }
+
+      .invite-title {
+        width: 80%;
+        max-width: 225px;
+      }
     }
   </style>
 </head>
@@ -464,9 +482,17 @@
 
     <div class="envelope">
 
+      <!-- FRONT OF ENVELOPE -->
+
       <div class="face front">
-        You're Invited
+        <img
+          src="https://i.imgur.com/XF0hZiS.png"
+          alt="You're Invited"
+          class="invite-title"
+        />
       </div>
+
+      <!-- BACK OF ENVELOPE -->
 
       <div class="face back">
         <div class="flap"></div>
@@ -513,16 +539,10 @@
 
     const intro = document.getElementById("intro");
     const introVideo = document.getElementById("introVideo");
-
     const scene = document.getElementById("scene");
-
     const buttons = document.getElementById("buttons");
-
     const rsvpHint = document.getElementById("rsvpHint");
-
-    const rocketCursor =
-      document.getElementById("rocketCursor");
-
+    const rocketCursor = document.getElementById("rocketCursor");
 
     /* =====================================================
        INTRO VIDEO
@@ -530,281 +550,143 @@
 
     let introFinished = false;
 
-
     function finishIntro() {
-
       if (introFinished) {
         return;
       }
 
       introFinished = true;
 
-
-      /*
-        Start revealing the invitation while
-        the rocket video fades away.
-      */
-
       scene.classList.add("ready");
-
       intro.classList.add("hide");
 
-
-      /*
-        Remove the video entirely once its
-        fade transition is finished.
-      */
-
       setTimeout(() => {
-
         intro.style.display = "none";
-
       }, 500);
-
     }
-
 
     /* =====================================================
        WHEN THE ROCKET VIDEO ENDS
        ===================================================== */
 
-    introVideo.addEventListener(
-      "ended",
-      finishIntro
-    );
-
+    introVideo.addEventListener("ended", finishIntro);
 
     /* =====================================================
        VIDEO ERROR FALLBACK
        ===================================================== */
 
-    introVideo.addEventListener(
-      "error",
-      finishIntro
-    );
-
+    introVideo.addEventListener("error", finishIntro);
 
     /* =====================================================
        START VIDEO
        ===================================================== */
 
-    window.addEventListener(
-      "load",
-      () => {
+    window.addEventListener("load", () => {
+      introVideo.muted = true;
+      introVideo.currentTime = 0;
 
-        introVideo.muted = true;
+      const playPromise = introVideo.play();
 
-        introVideo.currentTime = 0;
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          const startVideo = () => {
+            introVideo
+              .play()
+              .catch(() => {
+                finishIntro();
+              });
+          };
 
+          document.addEventListener(
+            "touchstart",
+            startVideo,
+            {
+              once: true
+            }
+          );
 
-        const playPromise =
-          introVideo.play();
-
-
-        if (playPromise !== undefined) {
-
-          playPromise.catch(() => {
-
-            /*
-              Some browsers can still block autoplay.
-
-              If that happens, the first user tap
-              starts the rocket launch.
-            */
-
-            const startVideo = () => {
-
-              introVideo
-                .play()
-                .catch(() => {
-
-                  /*
-                    If the browser refuses the video
-                    completely, show the invitation.
-                  */
-
-                  finishIntro();
-
-                });
-
-            };
-
-
-            document.addEventListener(
-              "touchstart",
-              startVideo,
-              {
-                once: true
-              }
-            );
-
-
-            document.addEventListener(
-              "click",
-              startVideo,
-              {
-                once: true
-              }
-            );
-
-          });
-
-        }
-
+          document.addEventListener(
+            "click",
+            startVideo,
+            {
+              once: true
+            }
+          );
+        });
       }
-    );
-
-
-    /* =====================================================
-       SAFETY FALLBACK
-
-       Prevents someone from getting permanently stuck
-       on the video if Imgur fails to fire "ended".
-       ===================================================== */
-
-    setTimeout(() => {
-
-      if (
-        introVideo.paused &&
-        introVideo.currentTime === 0
-      ) {
-
-        /*
-          We don't immediately remove the intro here
-          because the browser may simply be waiting
-          for the user's first interaction.
-        */
-
-        return;
-
-      }
-
-    }, 3000);
-
+    });
 
     /* =====================================================
        CUSTOM ROCKET CURSOR
        ===================================================== */
 
-    document.addEventListener(
-      "mousemove",
-      (e) => {
-
-        rocketCursor.style.left =
-          e.clientX + "px";
-
-        rocketCursor.style.top =
-          e.clientY + "px";
-
-      }
-    );
-
+    document.addEventListener("mousemove", (e) => {
+      rocketCursor.style.left = e.clientX + "px";
+      rocketCursor.style.top = e.clientY + "px";
+    });
 
     /* =====================================================
        OPEN INVITATION
        ===================================================== */
 
-    scene.addEventListener(
-      "click",
-      () => {
-
-        /*
-          Prevent invitation animation from firing
-          while the intro video is still visible.
-        */
-
-        if (!introFinished) {
-          return;
-        }
-
-
-        if (
-          !scene.classList.contains("spin")
-        ) {
-
-          /* Flip envelope */
-
-          scene.classList.add("spin");
-
-
-          /* Open flap */
-
-          setTimeout(() => {
-
-            scene.classList.add("open");
-
-          }, 800);
-
-
-          /* Pull card from envelope */
-
-          setTimeout(() => {
-
-            scene.classList.add("slide");
-
-            buttons.classList.add("show");
-
-            rsvpHint.style.opacity = "1";
-
-          }, 1600);
-
-        }
-
+    scene.addEventListener("click", () => {
+      if (!introFinished) {
+        return;
       }
-    );
 
+      if (!scene.classList.contains("spin")) {
+
+        /* Flip envelope */
+
+        scene.classList.add("spin");
+
+        /* Open flap */
+
+        setTimeout(() => {
+          scene.classList.add("open");
+        }, 800);
+
+        /* Pull card from envelope */
+
+        setTimeout(() => {
+          scene.classList.add("slide");
+          buttons.classList.add("show");
+          rsvpHint.style.opacity = "1";
+        }, 1600);
+      }
+    });
 
     /* =====================================================
        RSVP TEXT MESSAGE
        ===================================================== */
 
     (function () {
+      const phone = "+16166489671";
 
-      const phone =
-        "+16166489671";
+      const ua = navigator.userAgent || "";
 
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
 
-      const ua =
-        navigator.userAgent || "";
+      window.sendRSVP = function (status) {
+        const body =
+          `RSVP: ${status} Charlie's 7th Birthday Party.`;
 
+        const encoded = encodeURIComponent(body);
 
-      const isIOS =
-        /iPad|iPhone|iPod/.test(ua);
+        const link = isIOS
+          ? `sms:${phone}&body=${encoded}`
+          : `sms:${phone}?body=${encoded}`;
 
+        try {
+          window.location.href = link;
+        }
 
-      window.sendRSVP =
-        function (status) {
-
-
-          const body =
-            `RSVP: ${status} Charlie's 7th Birthday Party.`;
-
-
-          const encoded =
-            encodeURIComponent(body);
-
-
-          const link = isIOS
-            ? `sms:${phone}&body=${encoded}`
-            : `sms:${phone}?body=${encoded}`;
-
-
-          try {
-
-            window.location.href = link;
-
-          }
-
-          catch (err) {
-
-            alert(
-              `Please text ${phone} with: ${body}`
-            );
-
-          }
-
-        };
-
+        catch (err) {
+          alert(
+            `Please text ${phone} with: ${body}`
+          );
+        }
+      };
 
       /* ATTENDING */
 
@@ -813,14 +695,10 @@
         .addEventListener(
           "click",
           (e) => {
-
             e.stopPropagation();
-
             sendRSVP("Attending");
-
           }
         );
-
 
       /* NOT ATTENDING */
 
@@ -829,14 +707,10 @@
         .addEventListener(
           "click",
           (e) => {
-
             e.stopPropagation();
-
             sendRSVP("Not Attending");
-
           }
         );
-
     })();
   </script>
 
