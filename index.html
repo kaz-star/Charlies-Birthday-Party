@@ -1,43 +1,580 @@
-/* =====================================================
-   ROCKET INTRO VIDEO
-   ===================================================== */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-#intro {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999999;
+  <title>CHARLIE'S 7TH BDAY</title>
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  <meta property="og:title" content="CHARLIE'S 7TH BDAY" />
+  <meta
+    property="og:description"
+    content="You're invited to Charlie's 7th Birthday! Tap to RSVP."
+  />
+  <meta property="og:image" content="https://i.imgur.com/nbBLGks.png" />
+  <meta property="og:type" content="website" />
 
-  background: #f0f2f7;
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  opacity: 1;
-  visibility: visible;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-  transition:
-    opacity 0.45s ease,
-    visibility 0.45s ease;
-}
+    body {
+      background: #f0f2f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-#intro.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
 
-#introVideo {
-  width: 100%;
-  height: 100%;
-  display: block;
+    /* =====================================================
+       MAIN SCENE
+       ===================================================== */
 
-  object-fit: cover;
-  object-position: center center;
+    .scene {
+      position: relative;
+      perspective: 1400px;
+      text-align: center;
 
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
+      opacity: 0;
+      transform: scale(0.98);
+
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .scene.ready {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* =====================================================
+       ENVELOPE
+       ===================================================== */
+
+    .envelope {
+      width: 320px;
+      height: 230px;
+
+      position: relative;
+
+      transform-style: preserve-3d;
+
+      transition: transform 0.8s ease;
+    }
+
+    .face {
+      position: absolute;
+
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+
+      border-radius: 6px;
+
+      box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* =====================================================
+       FRONT OF ENVELOPE
+       ===================================================== */
+
+    .front {
+      background: linear-gradient(#ffffff, #f3f4f6);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 18px;
+    }
+
+    .invite-title {
+      display: block;
+
+      width: 78%;
+      max-width: 245px;
+      height: auto;
+
+      object-fit: contain;
+
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* =====================================================
+       BACK OF ENVELOPE
+       ===================================================== */
+
+    .back {
+      transform: rotateY(180deg);
+
+      background: linear-gradient(#ffffff, #f3f4f6);
+
+      overflow: visible;
+    }
+
+    /* =====================================================
+       ENVELOPE FLAP
+       ===================================================== */
+
+    .flap {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 45%;
+
+      background: linear-gradient(#ffffff, #e6e7eb);
+
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+      transform-origin: top center;
+
+      transition: transform 0.8s ease;
+
+      z-index: 2;
+
+      box-shadow:
+        inset 0 -3px 5px rgba(0, 0, 0, 0.15),
+        0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* =====================================================
+       ENVELOPE POCKET
+       ===================================================== */
+
+    .pocket {
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 55%;
+
+      background: #f8f9fb;
+    }
+
+    /* =====================================================
+       INVITATION CARD
+       ===================================================== */
+
+    .card {
+      position: absolute;
+
+      width: 280px;
+      height: 400px;
+
+      background: white;
+
+      left: 50%;
+      top: 90%;
+
+      transform: translate(-50%, 0);
+
+      opacity: 0;
+
+      transition:
+        transform 0.9s ease,
+        opacity 0.4s ease;
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.18);
+
+      z-index: 3;
+    }
+
+    .card img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+    }
+
+    /* =====================================================
+       ENVELOPE ANIMATION
+       ===================================================== */
+
+    .scene.spin .envelope {
+      transform: rotateY(180deg);
+    }
+
+    .scene.open .flap {
+      transform: rotateX(-160deg);
+    }
+
+    .scene.slide .card {
+      opacity: 1;
+      transform: translate(-50%, -120%);
+    }
+
+    /* =====================================================
+       RSVP HINT
+       ===================================================== */
+
+    .rsvp-hint {
+      font-size: 1.05em;
+      font-weight: bold;
+
+      color: #444;
+
+      margin: 12px 0 6px;
+
+      opacity: 0;
+
+      transition: opacity 0.4s ease;
+    }
+
+    /* =====================================================
+       RSVP BUTTONS
+       ===================================================== */
+
+    .buttons {
+      margin-top: 8px;
+
+      display: none;
+
+      gap: 10px;
+
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .buttons.show {
+      display: flex;
+    }
+
+    .buttons button {
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      padding: 10px 15px;
+
+      font-size: 1em;
+
+      border: none;
+
+      border-radius: 5px;
+
+      transition:
+        box-shadow 0.3s ease,
+        transform 0.2s ease;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .attend {
+      background-color: #695791;
+      color: white;
+    }
+
+    .decline {
+      background-color: #e96485;
+      color: white;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .buttons button:hover {
+        box-shadow:
+          0 0 15px rgba(255, 215, 0, 0.7);
+
+        transform: scale(1.05);
+      }
+    }
+
+    .buttons button:active {
+      transform: scale(0.97);
+
+      box-shadow:
+        0 0 12px rgba(255, 215, 0, 0.6);
+    }
+
+    /* =====================================================
+       CUSTOM ROCKET CURSOR
+       ===================================================== */
+
+    #rocketCursor {
+      display: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      html,
+      body,
+      body *,
+      button {
+        cursor: none !important;
+      }
+
+      #rocketCursor {
+        display: block;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: 65px;
+        height: 65px;
+
+        pointer-events: none;
+
+        z-index: 999999;
+
+        transform: translate(-50%, -50%);
+
+        will-change: left, top;
+      }
+
+      #rocketCursor img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        pointer-events: none;
+
+        user-select: none;
+
+        -webkit-user-drag: none;
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      #rocketCursor {
+        display: none !important;
+      }
+    }
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 500px) {
+      .envelope {
+        width: 300px;
+        height: 216px;
+      }
+
+      .card {
+        width: 265px;
+        height: 379px;
+      }
+
+      .invite-title {
+        width: 80%;
+        max-width: 225px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- =====================================================
+       CUSTOM ROCKET CURSOR
+       ===================================================== -->
+
+  <div id="rocketCursor">
+    <img
+      src="https://i.imgur.com/vkgyQTf.png"
+      alt=""
+    />
+  </div>
+
+  <!-- =====================================================
+       INVITATION
+       ===================================================== -->
+
+  <div class="scene ready" id="scene">
+
+    <div class="envelope">
+
+      <!-- FRONT OF ENVELOPE -->
+
+      <div class="face front">
+        <img
+          src="https://i.imgur.com/XF0hZiS.png"
+          alt="You're Invited"
+          class="invite-title"
+        />
+      </div>
+
+      <!-- BACK OF ENVELOPE -->
+
+      <div class="face back">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+      </div>
+
+    </div>
+
+    <!-- INVITATION CARD -->
+
+    <div class="card" id="card">
+      <img
+        src="https://i.imgur.com/tLVLZo7.png"
+        alt="Charlie's 7th Birthday Invitation"
+      />
+    </div>
+
+    <!-- RSVP TEXT -->
+
+    <div class="rsvp-hint" id="rsvpHint">
+      Tap to RSVP
+    </div>
+
+    <!-- RSVP BUTTONS -->
+
+    <div class="buttons" id="buttons">
+
+      <button class="attend">
+        Attending
+      </button>
+
+      <button class="decline">
+        Not Attending
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const scene = document.getElementById("scene");
+    const buttons = document.getElementById("buttons");
+    const rsvpHint = document.getElementById("rsvpHint");
+    const rocketCursor = document.getElementById("rocketCursor");
+
+
+    /* =====================================================
+       CUSTOM ROCKET CURSOR
+       ===================================================== */
+
+    document.addEventListener("mousemove", (e) => {
+      rocketCursor.style.left = e.clientX + "px";
+      rocketCursor.style.top = e.clientY + "px";
+    });
+
+    /* =====================================================
+       OPEN INVITATION
+       ===================================================== */
+
+    scene.addEventListener("click", () => {
+
+      if (!scene.classList.contains("spin")) {
+
+        /* Flip envelope */
+
+        scene.classList.add("spin");
+
+        /* Open flap */
+
+        setTimeout(() => {
+          scene.classList.add("open");
+        }, 800);
+
+        /* Pull card from envelope */
+
+        setTimeout(() => {
+          scene.classList.add("slide");
+          buttons.classList.add("show");
+          rsvpHint.style.opacity = "1";
+        }, 1600);
+      }
+    });
+
+    /* =====================================================
+       RSVP TEXT MESSAGE
+       ===================================================== */
+
+    (function () {
+      const phone = "+16166489671";
+
+      const ua = navigator.userAgent || "";
+
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
+
+      window.sendRSVP = function (status) {
+        const body =
+          `RSVP: ${status} Charlie's 7th Birthday Party.`;
+
+        const encoded = encodeURIComponent(body);
+
+        const link = isIOS
+          ? `sms:${phone}&body=${encoded}`
+          : `sms:${phone}?body=${encoded}`;
+
+        try {
+          window.location.href = link;
+        }
+
+        catch (err) {
+          alert(
+            `Please text ${phone} with: ${body}`
+          );
+        }
+      };
+
+      /* ATTENDING */
+
+      document
+        .querySelector(".attend")
+        .addEventListener(
+          "click",
+          (e) => {
+            e.stopPropagation();
+            sendRSVP("Attending");
+          }
+        );
+
+      /* NOT ATTENDING */
+
+      document
+        .querySelector(".decline")
+        .addEventListener(
+          "click",
+          (e) => {
+            e.stopPropagation();
+            sendRSVP("Not Attending");
+          }
+        );
+    })();
+  </script>
+
+</body>
+</html>
