@@ -29,14 +29,19 @@
 
     body {
       background: #f0f2f7;
+
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
-    }
 
+      min-height: 100vh;
+
+      overflow: hidden;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      touch-action: manipulation;
+    }
 
     /* =====================================================
        MAIN SCENE
@@ -44,10 +49,13 @@
 
     .scene {
       position: relative;
+
       perspective: 1400px;
+
       text-align: center;
 
       opacity: 0;
+
       transform: scale(0.98);
 
       transition:
@@ -57,6 +65,7 @@
 
     .scene.ready {
       opacity: 1;
+
       transform: scale(1);
     }
 
@@ -118,7 +127,9 @@
       object-fit: contain;
 
       pointer-events: none;
+
       user-select: none;
+
       -webkit-user-drag: none;
     }
 
@@ -230,6 +241,7 @@
 
     .scene.slide .card {
       opacity: 1;
+
       transform: translate(-50%, -120%);
     }
 
@@ -239,6 +251,7 @@
 
     .rsvp-hint {
       font-size: 1.05em;
+
       font-weight: bold;
 
       color: #444;
@@ -262,6 +275,7 @@
       gap: 10px;
 
       justify-content: center;
+
       flex-wrap: wrap;
     }
 
@@ -293,11 +307,13 @@
 
     .attend {
       background-color: #695791;
+
       color: white;
     }
 
     .decline {
       background-color: #e96485;
+
       color: white;
     }
 
@@ -318,7 +334,7 @@
     }
 
     /* =====================================================
-       CUSTOM ROCKET CURSOR
+       CUSTOM DESKTOP ROCKET CURSOR
        ===================================================== */
 
     #rocketCursor {
@@ -376,22 +392,118 @@
     }
 
     /* =====================================================
+       MOBILE TOUCH ROCKET
+       ===================================================== */
+
+    #touchRocket {
+      display: none;
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 58px;
+      height: 58px;
+
+      pointer-events: none;
+
+      z-index: 9999999;
+
+      opacity: 0;
+
+      transform: translate(-50%, -50%);
+
+      will-change:
+        left,
+        top,
+        transform,
+        opacity;
+    }
+
+    #touchRocket img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+
+      pointer-events: none;
+
+      user-select: none;
+
+      -webkit-user-drag: none;
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      #touchRocket {
+        display: block;
+      }
+
+      #touchRocket.touching {
+        opacity: 1;
+
+        transform:
+          translate(-50%, -50%)
+          scale(1);
+      }
+
+      #touchRocket.launch {
+        animation:
+          touchRocketLaunch
+          0.38s
+          ease-out
+          forwards;
+      }
+    }
+
+    @keyframes touchRocketLaunch {
+      0% {
+        opacity: 1;
+
+        transform:
+          translate(-50%, -50%)
+          scale(1);
+      }
+
+      35% {
+        opacity: 1;
+
+        transform:
+          translate(-50%, -70%)
+          scale(1.12);
+      }
+
+      100% {
+        opacity: 0;
+
+        transform:
+          translate(-50%, -125%)
+          scale(0.88);
+      }
+    }
+
+    /* =====================================================
        MOBILE
        ===================================================== */
 
     @media (max-width: 500px) {
       .envelope {
         width: 300px;
+
         height: 216px;
       }
 
       .card {
         width: 265px;
+
         height: 379px;
       }
 
       .invite-title {
         width: 80%;
+
         max-width: 225px;
       }
     }
@@ -400,12 +512,22 @@
 
 <body>
 
-
   <!-- =====================================================
-       CUSTOM ROCKET CURSOR
+       CUSTOM DESKTOP ROCKET CURSOR
        ===================================================== -->
 
   <div id="rocketCursor">
+    <img
+      src="https://i.imgur.com/vkgyQTf.png"
+      alt=""
+    />
+  </div>
+
+  <!-- =====================================================
+       MOBILE TOUCH ROCKET
+       ===================================================== -->
+
+  <div id="touchRocket">
     <img
       src="https://i.imgur.com/vkgyQTf.png"
       alt=""
@@ -423,18 +545,23 @@
       <!-- FRONT OF ENVELOPE -->
 
       <div class="face front">
+
         <img
           src="https://i.imgur.com/XF0hZiS.png"
           alt="You're Invited"
           class="invite-title"
         />
+
       </div>
 
       <!-- BACK OF ENVELOPE -->
 
       <div class="face back">
+
         <div class="flap"></div>
+
         <div class="pocket"></div>
+
       </div>
 
     </div>
@@ -442,21 +569,29 @@
     <!-- INVITATION CARD -->
 
     <div class="card" id="card">
+
       <img
         src="https://i.imgur.com/tLVLZo7.png"
         alt="Charlie's 7th Birthday Invitation"
       />
+
     </div>
 
     <!-- RSVP TEXT -->
 
-    <div class="rsvp-hint" id="rsvpHint">
+    <div
+      class="rsvp-hint"
+      id="rsvpHint"
+    >
       Tap to RSVP
     </div>
 
     <!-- RSVP BUTTONS -->
 
-    <div class="buttons" id="buttons">
+    <div
+      class="buttons"
+      id="buttons"
+    >
 
       <button class="attend">
         Attending
@@ -471,84 +606,292 @@
   </div>
 
   <script>
+
     /* =====================================================
        ELEMENTS
        ===================================================== */
 
-    const scene = document.getElementById("scene");
-    const buttons = document.getElementById("buttons");
-    const rsvpHint = document.getElementById("rsvpHint");
-    const rocketCursor = document.getElementById("rocketCursor");
+    const scene =
+      document.getElementById("scene");
+
+    const buttons =
+      document.getElementById("buttons");
+
+    const rsvpHint =
+      document.getElementById("rsvpHint");
+
+    const rocketCursor =
+      document.getElementById("rocketCursor");
+
+    const touchRocket =
+      document.getElementById("touchRocket");
 
 
     /* =====================================================
-       CUSTOM ROCKET CURSOR
+       DESKTOP ROCKET CURSOR
        ===================================================== */
 
-    document.addEventListener("mousemove", (e) => {
-      rocketCursor.style.left = e.clientX + "px";
-      rocketCursor.style.top = e.clientY + "px";
-    });
+    document.addEventListener(
+      "mousemove",
+      (e) => {
+
+        rocketCursor.style.left =
+          e.clientX + "px";
+
+        rocketCursor.style.top =
+          e.clientY + "px";
+
+      }
+    );
+
+
+    /* =====================================================
+       MOBILE TOUCH ROCKET
+       ===================================================== */
+
+    function moveTouchRocket(touch) {
+
+      touchRocket.style.left =
+        touch.clientX + "px";
+
+      touchRocket.style.top =
+        touch.clientY + "px";
+
+    }
+
+
+    /* =====================================================
+       FINGER TOUCHES SCREEN
+       ===================================================== */
+
+    document.addEventListener(
+      "touchstart",
+      (e) => {
+
+        const touch =
+          e.touches[0];
+
+        if (!touch) {
+          return;
+        }
+
+        moveTouchRocket(touch);
+
+        touchRocket.classList.remove(
+          "launch"
+        );
+
+        touchRocket.classList.add(
+          "touching"
+        );
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* =====================================================
+       FINGER MOVES
+       ===================================================== */
+
+    document.addEventListener(
+      "touchmove",
+      (e) => {
+
+        const touch =
+          e.touches[0];
+
+        if (!touch) {
+          return;
+        }
+
+        moveTouchRocket(touch);
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* =====================================================
+       FINGER LIFTS
+       ===================================================== */
+
+    document.addEventListener(
+      "touchend",
+      () => {
+
+        touchRocket.classList.remove(
+          "touching"
+        );
+
+        /*
+          Reset animation so it can
+          replay every single tap.
+        */
+
+        touchRocket.classList.remove(
+          "launch"
+        );
+
+        void touchRocket.offsetWidth;
+
+        touchRocket.classList.add(
+          "launch"
+        );
+
+        setTimeout(
+          () => {
+
+            touchRocket.classList.remove(
+              "launch"
+            );
+
+          },
+          380
+        );
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* =====================================================
+       TOUCH CANCEL
+       ===================================================== */
+
+    document.addEventListener(
+      "touchcancel",
+      () => {
+
+        touchRocket.classList.remove(
+          "touching"
+        );
+
+        touchRocket.classList.remove(
+          "launch"
+        );
+
+      },
+      {
+        passive: true
+      }
+    );
+
 
     /* =====================================================
        OPEN INVITATION
        ===================================================== */
 
-    scene.addEventListener("click", () => {
+    scene.addEventListener(
+      "click",
+      () => {
 
-      if (!scene.classList.contains("spin")) {
+        if (
+          !scene.classList.contains(
+            "spin"
+          )
+        ) {
 
-        /* Flip envelope */
+          /* Flip envelope */
 
-        scene.classList.add("spin");
+          scene.classList.add(
+            "spin"
+          );
 
-        /* Open flap */
 
-        setTimeout(() => {
-          scene.classList.add("open");
-        }, 800);
+          /* Open flap */
 
-        /* Pull card from envelope */
+          setTimeout(
+            () => {
 
-        setTimeout(() => {
-          scene.classList.add("slide");
-          buttons.classList.add("show");
-          rsvpHint.style.opacity = "1";
-        }, 1600);
+              scene.classList.add(
+                "open"
+              );
+
+            },
+            800
+          );
+
+
+          /* Pull card from envelope */
+
+          setTimeout(
+            () => {
+
+              scene.classList.add(
+                "slide"
+              );
+
+              buttons.classList.add(
+                "show"
+              );
+
+              rsvpHint.style.opacity =
+                "1";
+
+            },
+            1600
+          );
+
+        }
+
       }
-    });
+    );
+
 
     /* =====================================================
        RSVP TEXT MESSAGE
        ===================================================== */
 
     (function () {
-      const phone = "+16166489671";
 
-      const ua = navigator.userAgent || "";
+      const phone =
+        "+16166489671";
 
-      const isIOS = /iPad|iPhone|iPod/.test(ua);
+      const ua =
+        navigator.userAgent || "";
 
-      window.sendRSVP = function (status) {
-        const body =
-          `RSVP: ${status} Charlie's 7th Birthday Party.`;
+      const isIOS =
+        /iPad|iPhone|iPod/.test(ua);
 
-        const encoded = encodeURIComponent(body);
 
-        const link = isIOS
-          ? `sms:${phone}&body=${encoded}`
-          : `sms:${phone}?body=${encoded}`;
+      window.sendRSVP =
+        function (status) {
 
-        try {
-          window.location.href = link;
-        }
+          const body =
+            `RSVP: ${status} Charlie's 7th Birthday Party.`;
 
-        catch (err) {
-          alert(
-            `Please text ${phone} with: ${body}`
-          );
-        }
-      };
+          const encoded =
+            encodeURIComponent(body);
+
+          const link =
+            isIOS
+              ? `sms:${phone}&body=${encoded}`
+              : `sms:${phone}?body=${encoded}`;
+
+          try {
+
+            window.location.href =
+              link;
+
+          }
+
+          catch (err) {
+
+            alert(
+              `Please text ${phone} with: ${body}`
+            );
+
+          }
+
+        };
+
 
       /* ATTENDING */
 
@@ -557,10 +900,16 @@
         .addEventListener(
           "click",
           (e) => {
+
             e.stopPropagation();
-            sendRSVP("Attending");
+
+            sendRSVP(
+              "Attending"
+            );
+
           }
         );
+
 
       /* NOT ATTENDING */
 
@@ -569,11 +918,18 @@
         .addEventListener(
           "click",
           (e) => {
+
             e.stopPropagation();
-            sendRSVP("Not Attending");
+
+            sendRSVP(
+              "Not Attending"
+            );
+
           }
         );
+
     })();
+
   </script>
 
 </body>
