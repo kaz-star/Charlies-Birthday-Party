@@ -53,7 +53,13 @@
 
       opacity: 0;
 
-      transform: scale(0.98);
+      /*
+        The scale is calculated automatically in JavaScript so the entire
+        envelope/card/RSVP area is as large as possible without clipping.
+        Everything scales together, so all positions and animations stay intact.
+      */
+      transform: scale(var(--scene-pre-scale, 1));
+      transform-origin: center center;
 
       transition:
         opacity 0.6s ease,
@@ -62,7 +68,7 @@
 
     .scene.ready {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(var(--scene-scale, 1));
     }
 
     /* =====================================================
@@ -653,6 +659,192 @@
 
     const declineButton =
       document.getElementById("declineButton");
+
+
+    /* =====================================================
+       MAXIMUM SAFE INVITATION SCALE
+       ===================================================== */
+
+    function measureSceneState(openState = false) {
+      const clone = scene.cloneNode(true);
+
+      clone.removeAttribute("id");
+      clone.querySelectorAll("[id]").forEach((el) => {
+        el.removeAttribute("id");
+      });
+
+      clone.classList.remove("ready", "spin", "open", "slide");
+
+      if (openState) {
+        clone.classList.add("spin", "open", "slide");
+
+        const cloneButtons =
+          clone.querySelector(".buttons");
+
+        const cloneHint =
+          clone.querySelector(".rsvp-hint");
+
+        if (cloneButtons) {
+          cloneButtons.classList.add("show");
+        }
+
+        if (cloneHint) {
+          cloneHint.style.opacity = "1";
+        }
+      }
+
+      clone.style.position = "fixed";
+      clone.style.left = "0";
+      clone.style.top = "0";
+      clone.style.width = scene.offsetWidth + "px";
+      clone.style.opacity = "1";
+      clone.style.visibility = "hidden";
+      clone.style.pointerEvents = "none";
+      clone.style.transform = "none";
+      clone.style.transition = "none";
+      clone.style.zIndex = "-999999";
+
+      document.body.appendChild(clone);
+
+      const cloneRect =
+        clone.getBoundingClientRect();
+
+      let minLeft = cloneRect.left;
+      let maxRight = cloneRect.right;
+      let minTop = cloneRect.top;
+      let maxBottom = cloneRect.bottom;
+
+      clone
+        .querySelectorAll("*")
+        .forEach((el) => {
+
+          const style =
+            window.getComputedStyle(el);
+
+          if (
+            style.display === "none" ||
+            style.visibility === "hidden"
+          ) {
+            return;
+          }
+
+          const rect =
+            el.getBoundingClientRect();
+
+          if (
+            rect.width === 0 &&
+            rect.height === 0
+          ) {
+            return;
+          }
+
+          minLeft =
+            Math.min(minLeft, rect.left);
+
+          maxRight =
+            Math.max(maxRight, rect.right);
+
+          minTop =
+            Math.min(minTop, rect.top);
+
+          maxBottom =
+            Math.max(maxBottom, rect.bottom);
+
+        });
+
+      clone.remove();
+
+      return {
+        width: maxRight - minLeft,
+        height: maxBottom - minTop
+      };
+    }
+
+
+    function setMaximumSafeScale() {
+
+      /*
+        Leave a small breathing room around the edges so browser rounding,
+        shadows and mobile safe areas never clip the invitation.
+      */
+      const edgePadding = 16;
+
+      const closed =
+        measureSceneState(false);
+
+      const opened =
+        measureSceneState(true);
+
+      const designWidth =
+        Math.max(
+          closed.width,
+          opened.width
+        );
+
+      const designHeight =
+        Math.max(
+          closed.height,
+          opened.height
+        );
+
+      const availableWidth =
+        Math.max(
+          1,
+          window.innerWidth -
+          edgePadding * 2
+        );
+
+      const availableHeight =
+        Math.max(
+          1,
+          window.innerHeight -
+          edgePadding * 2
+        );
+
+      const maxScale =
+        Math.min(
+          availableWidth / designWidth,
+          availableHeight / designHeight
+        );
+
+      /*
+        Use essentially the full safe size.
+        The tiny 0.99 factor protects against sub-pixel rounding.
+      */
+      const safeScale =
+        maxScale * 0.99;
+
+      const preScale =
+        safeScale * 0.98;
+
+      scene.style.setProperty(
+        "--scene-scale",
+        safeScale.toFixed(4)
+      );
+
+      scene.style.setProperty(
+        "--scene-pre-scale",
+        preScale.toFixed(4)
+      );
+    }
+
+
+    setMaximumSafeScale();
+
+    window.addEventListener(
+      "resize",
+      setMaximumSafeScale
+    );
+
+    window.addEventListener(
+      "orientationchange",
+      () => {
+        setTimeout(
+          setMaximumSafeScale,
+          120
+        );
+      }
+    );
 
 
     /* =====================================================
