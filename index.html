@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover"
+/>
 
 <title>CHARLIE'S 7TH BDAY</title>
 
-<meta property="og:title" content="CHARLIE'S 7TH BDAY" />
+<meta
+property="og:title"
+content="CHARLIE'S 7TH BDAY"
+/>
+
 <meta
 property="og:description"
 content="You're invited to Charlie's 7th Birthday! Tap to RSVP."
 />
-<meta property="og:image" content="https://i.imgur.com/nbBLGks.png" />
-<meta property="og:type" content="website" />
+
+<meta
+property="og:image"
+content="https://i.imgur.com/nbBLGks.png"
+/>
+
+<meta
+property="og:type"
+content="website"
+/>
+
 
 <style>
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+
 * {
 box-sizing: border-box;
 }
@@ -32,51 +56,62 @@ overflow: hidden;
 }
 
 body {
-background: #f0f2f7;
+position: relative;
 
-display: flex;
-justify-content: center;
-align-items: center;
-
-width: 100%;
+width: 100vw;
+height: 100vh;
 height: 100dvh;
-min-height: 100vh;
 
 overflow: hidden;
 
-padding:
-max(10px, env(safe-area-inset-top))
-max(10px, env(safe-area-inset-right))
-max(10px, env(safe-area-inset-bottom))
-max(10px, env(safe-area-inset-left));
+background: #f0f2f7;
 
-font-family: Arial, Helvetica, sans-serif;
+font-family:
+Arial,
+Helvetica,
+sans-serif;
+
+-webkit-text-size-adjust: 100%;
 }
 
 
 /* =====================================================
-      MASTER FIT STAGE
-      ===================================================== */
+   MASTER FIT STAGE
+   ===================================================== */
 
 #fitStage {
-position: relative;
+position: fixed;
 
-flex: 0 0 auto;
+left: 50%;
+top: 50%;
+
+width: 320px;
+height: 500px;
 
 transform-origin: center center;
 
-transform: scale(var(--fit-scale, 1));
+transform:
+translate(-50%, -50%)
+scale(var(--fit-scale, 1));
 
-will-change: transform;
+will-change:
+left,
+top,
+transform;
+
+z-index: 1;
 }
 
 
 /* =====================================================
-      MAIN SCENE
-      ===================================================== */
+   MAIN SCENE
+   ===================================================== */
 
 .scene {
 position: absolute;
+
+left: 0;
+top: 0;
 
 width: 320px;
 
@@ -102,8 +137,8 @@ transform: scale(1);
 
 
 /* =====================================================
-      ENVELOPE
-      ===================================================== */
+   ENVELOPE
+   ===================================================== */
 
 .envelope {
 width: 320px;
@@ -113,7 +148,8 @@ position: relative;
 
 transform-style: preserve-3d;
 
-transition: transform 0.8s ease;
+transition:
+transform 0.8s ease;
 
 -webkit-tap-highlight-color: transparent;
 
@@ -127,6 +163,7 @@ width: 100%;
 height: 100%;
 
 display: flex;
+
 align-items: center;
 justify-content: center;
 
@@ -141,13 +178,18 @@ box-shadow:
 
 
 /* =====================================================
-      FRONT OF ENVELOPE
-      ===================================================== */
+   FRONT OF ENVELOPE
+   ===================================================== */
 
 .front {
-background: linear-gradient(#ffffff, #f3f4f6);
+background:
+linear-gradient(
+#ffffff,
+#f3f4f6
+);
 
 display: flex;
+
 align-items: center;
 justify-content: center;
 
@@ -166,26 +208,32 @@ object-fit: contain;
 pointer-events: none;
 
 user-select: none;
+
 -webkit-user-drag: none;
 }
 
 
 /* =====================================================
-      BACK OF ENVELOPE
-      ===================================================== */
+   BACK OF ENVELOPE
+   ===================================================== */
 
 .back {
-transform: rotateY(180deg);
+transform:
+rotateY(180deg);
 
-background: linear-gradient(#ffffff, #f3f4f6);
+background:
+linear-gradient(
+#ffffff,
+#f3f4f6
+);
 
 overflow: visible;
 }
 
 
 /* =====================================================
-      ENVELOPE FLAP
-      ===================================================== */
+   ENVELOPE FLAP
+   ===================================================== */
 
 .flap {
 position: absolute;
@@ -196,13 +244,24 @@ left: 0;
 width: 100%;
 height: 45%;
 
-background: linear-gradient(#ffffff, #e6e7eb);
+background:
+linear-gradient(
+#ffffff,
+#e6e7eb
+);
 
-clip-path: polygon(0 0, 100% 0, 50% 100%);
+clip-path:
+polygon(
+0 0,
+100% 0,
+50% 100%
+);
 
-transform-origin: top center;
+transform-origin:
+top center;
 
-transition: transform 0.8s ease;
+transition:
+transform 0.8s ease;
 
 z-index: 2;
 
@@ -213,8 +272,8 @@ inset 0 -3px 5px rgba(0, 0, 0, 0.15),
 
 
 /* =====================================================
-      ENVELOPE POCKET
-      ===================================================== */
+   ENVELOPE POCKET
+   ===================================================== */
 
 .pocket {
 position: absolute;
@@ -225,13 +284,14 @@ left: 0;
 width: 100%;
 height: 55%;
 
-background: #f8f9fb;
+background:
+#f8f9fb;
 }
 
 
 /* =====================================================
-      INVITATION CARD
-      ===================================================== */
+   INVITATION CARD
+   ===================================================== */
 
 .card {
 position: absolute;
@@ -244,7 +304,8 @@ background: white;
 left: 50%;
 top: 90%;
 
-transform: translate(-50%, 0);
+transform:
+translate(-50%, 0);
 
 opacity: 0;
 
@@ -256,6 +317,8 @@ box-shadow:
 0 8px 20px rgba(0, 0, 0, 0.18);
 
 z-index: 3;
+
+pointer-events: none;
 }
 
 .card img {
@@ -265,51 +328,66 @@ width: 100%;
 height: 100%;
 
 object-fit: contain;
+
+user-select: none;
+
+-webkit-user-drag: none;
 }
 
 
 /* =====================================================
-      ENVELOPE ANIMATION
-      ===================================================== */
+   ENVELOPE ANIMATION
+   ===================================================== */
 
 .scene.spin .envelope {
-transform: rotateY(180deg);
+transform:
+rotateY(180deg);
 }
 
 .scene.open .flap {
-transform: rotateX(-160deg);
+transform:
+rotateX(-160deg);
 }
 
 .scene.slide .card {
 opacity: 1;
 
-transform: translate(-50%, -120%);
+transform:
+translate(-50%, -120%);
 }
 
 
 /* =====================================================
-      RSVP HINT
-      ===================================================== */
+   RSVP HINT
+   ===================================================== */
 
 .rsvp-hint {
+position: relative;
+
 font-size: 1.05em;
 font-weight: bold;
 
 color: #444;
 
-margin: 12px 0 6px;
+margin:
+12px 0 6px;
 
 opacity: 0;
 
-transition: opacity 0.4s ease;
+transition:
+opacity 0.4s ease;
+
+pointer-events: none;
 }
 
 
 /* =====================================================
-      RSVP BUTTONS
-      ===================================================== */
+   RSVP BUTTONS
+   ===================================================== */
 
 .buttons {
+position: relative;
+
 margin-top: 8px;
 
 display: none;
@@ -317,9 +395,8 @@ display: none;
 gap: 10px;
 
 justify-content: center;
-flex-wrap: wrap;
 
-position: relative;
+flex-wrap: wrap;
 
 z-index: 50;
 }
@@ -329,12 +406,17 @@ display: flex;
 }
 
 .buttons button {
+position: relative;
+
 display: flex;
+
 align-items: center;
+justify-content: center;
 
 gap: 6px;
 
-padding: 10px 15px;
+padding:
+10px 15px;
 
 font-size: 1em;
 
@@ -350,34 +432,48 @@ transform 0.2s ease;
 
 touch-action: manipulation;
 
-position: relative;
+cursor: pointer;
 
 z-index: 51;
 }
 
 .attend {
-background-color: #695791;
+background-color:
+#695791;
+
 color: white;
 }
 
 .decline {
-background-color: #e96485;
+background-color:
+#e96485;
+
 color: white;
 }
 
-@media (hover: hover) and (pointer: fine) {
+
+/* =====================================================
+   BUTTON HOVER
+   ===================================================== */
+
+@media
+(hover: hover)
+and
+(pointer: fine) {
 
 .buttons button:hover {
 box-shadow:
 0 0 15px rgba(255, 215, 0, 0.7);
 
-transform: scale(1.05);
+transform:
+scale(1.05);
 }
 
 }
 
 .buttons button:active {
-transform: scale(0.97);
+transform:
+scale(0.97);
 
 box-shadow:
 0 0 12px rgba(255, 215, 0, 0.6);
@@ -385,14 +481,17 @@ box-shadow:
 
 
 /* =====================================================
-      DESKTOP ROCKET CURSOR
-      ===================================================== */
+   DESKTOP ROCKET CURSOR
+   ===================================================== */
 
 #rocketCursor {
 display: none;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media
+(hover: hover)
+and
+(pointer: fine) {
 
 html,
 body,
@@ -416,9 +515,12 @@ pointer-events: none;
 
 z-index: 999999;
 
-transform: translate(-50%, -50%);
+transform:
+translate(-50%, -50%);
 
-will-change: left, top;
+will-change:
+left,
+top;
 }
 
 #rocketCursor img {
@@ -432,12 +534,20 @@ object-fit: contain;
 pointer-events: none;
 
 user-select: none;
+
 -webkit-user-drag: none;
 }
 
 }
 
-@media (hover: none), (pointer: coarse) {
+
+/* =====================================================
+   HIDE DESKTOP CURSOR ON TOUCH DEVICES
+   ===================================================== */
+
+@media
+(hover: none),
+(pointer: coarse) {
 
 #rocketCursor {
 display: none !important;
@@ -447,8 +557,8 @@ display: none !important;
 
 
 /* =====================================================
-      MOBILE TOUCH ROCKET
-      ===================================================== */
+   MOBILE TOUCH ROCKET
+   ===================================================== */
 
 #touchRocket {
 display: none;
@@ -467,7 +577,8 @@ z-index: 9999999;
 
 opacity: 0;
 
-transform: translate(-50%, -50%);
+transform:
+translate(-50%, -50%);
 
 will-change:
 left,
@@ -487,10 +598,14 @@ object-fit: contain;
 pointer-events: none;
 
 user-select: none;
+
 -webkit-user-drag: none;
 }
 
-@media (hover: none), (pointer: coarse) {
+
+@media
+(hover: none),
+(pointer: coarse) {
 
 #touchRocket {
 display: block;
@@ -516,8 +631,8 @@ forwards;
 
 
 /* =====================================================
-      MOBILE ROCKET LAUNCH
-      ===================================================== */
+   MOBILE ROCKET LAUNCH
+   ===================================================== */
 
 @keyframes touchRocketLaunch {
 
@@ -549,8 +664,8 @@ scale(0.88);
 
 
 /* =====================================================
-      MOBILE
-      ===================================================== */
+   MOBILE BASE DIMENSIONS
+   ===================================================== */
 
 @media (max-width: 500px) {
 
@@ -577,8 +692,8 @@ max-width: 225px;
 
 
 /* =====================================================
-      VERY SMALL PHONES
-      ===================================================== */
+   VERY SMALL PHONES
+   ===================================================== */
 
 @media (max-width: 350px) {
 
@@ -596,16 +711,27 @@ width: 250px;
 height: 357px;
 }
 
+.buttons button {
+padding:
+9px 12px;
+
+font-size:
+0.95em;
 }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
 
 <!-- =====================================================
-      DESKTOP ROCKET CURSOR
-      ===================================================== -->
+     DESKTOP ROCKET CURSOR
+     ===================================================== -->
 
 <div id="rocketCursor">
 
@@ -618,8 +744,8 @@ alt=""
 
 
 <!-- =====================================================
-      MOBILE TOUCH ROCKET
-      ===================================================== -->
+     MOBILE TOUCH ROCKET
+     ===================================================== -->
 
 <div id="touchRocket">
 
@@ -632,15 +758,15 @@ alt=""
 
 
 <!-- =====================================================
-      MASTER FIT STAGE
-      ===================================================== -->
+     MASTER SCALING STAGE
+     ===================================================== -->
 
 <div id="fitStage">
 
 
 <!-- =====================================================
-      INVITATION
-      ===================================================== -->
+     INVITATION
+     ===================================================== -->
 
 <div
 class="scene"
@@ -648,13 +774,17 @@ id="scene"
 >
 
 
+<!-- =====================================================
+     ENVELOPE
+     ===================================================== -->
+
 <div
 class="envelope"
 id="envelope"
 >
 
 
-<!-- FRONT OF ENVELOPE -->
+<!-- FRONT -->
 
 <div class="face front">
 
@@ -667,7 +797,7 @@ class="invite-title"
 </div>
 
 
-<!-- BACK OF ENVELOPE -->
+<!-- BACK -->
 
 <div class="face back">
 
@@ -681,7 +811,9 @@ class="invite-title"
 </div>
 
 
-<!-- INVITATION CARD -->
+<!-- =====================================================
+     INVITATION CARD
+     ===================================================== -->
 
 <div
 class="card"
@@ -696,38 +828,51 @@ alt="Charlie's 7th Birthday Invitation"
 </div>
 
 
-<!-- RSVP TEXT -->
+<!-- =====================================================
+     RSVP TEXT
+     ===================================================== -->
 
 <div
 class="rsvp-hint"
 id="rsvpHint"
 >
+
 Tap to RSVP
+
 </div>
 
 
-<!-- RSVP BUTTONS -->
+<!-- =====================================================
+     RSVP BUTTONS
+     ===================================================== -->
 
 <div
 class="buttons"
 id="buttons"
 >
 
+
 <button
 class="attend"
 id="attendButton"
 type="button"
 >
+
 Attending
+
 </button>
+
 
 <button
 class="decline"
 id="declineButton"
 type="button"
 >
+
 Not Attending
+
 </button>
+
 
 </div>
 
@@ -738,57 +883,95 @@ Not Attending
 
 
 <script>
+
 /* =====================================================
-      ELEMENTS
-      ===================================================== */
+   ELEMENTS
+   ===================================================== */
 
 const fitStage =
-document.getElementById("fitStage");
+document.getElementById(
+"fitStage"
+);
 
 const scene =
-document.getElementById("scene");
+document.getElementById(
+"scene"
+);
 
 const envelope =
-document.getElementById("envelope");
+document.getElementById(
+"envelope"
+);
 
 const buttons =
-document.getElementById("buttons");
+document.getElementById(
+"buttons"
+);
 
 const rsvpHint =
-document.getElementById("rsvpHint");
+document.getElementById(
+"rsvpHint"
+);
 
 const rocketCursor =
-document.getElementById("rocketCursor");
+document.getElementById(
+"rocketCursor"
+);
 
 const touchRocket =
-document.getElementById("touchRocket");
+document.getElementById(
+"touchRocket"
+);
 
 const attendButton =
-document.getElementById("attendButton");
+document.getElementById(
+"attendButton"
+);
 
 const declineButton =
-document.getElementById("declineButton");
+document.getElementById(
+"declineButton"
+);
 
 
 /* =====================================================
-      MEASURE ENTIRE DESIGN
-      ===================================================== */
+   MEASURE COMPLETE INVITATION
+   ===================================================== */
 
-function measureSceneState(openState = false) {
+function measureSceneState(
+openState = false
+) {
 
 const clone =
 scene.cloneNode(true);
 
-clone.removeAttribute("id");
+
+/*
+Remove duplicate IDs.
+*/
+
+clone.removeAttribute(
+"id"
+);
 
 clone
-.querySelectorAll("[id]")
-.forEach((el) => {
+.querySelectorAll(
+"[id]"
+)
+.forEach(
+(el) => {
 
-el.removeAttribute("id");
+el.removeAttribute(
+"id"
+);
 
-});
+}
+);
 
+
+/*
+Remove all animation state.
+*/
 
 clone.classList.remove(
 "ready",
@@ -798,6 +981,11 @@ clone.classList.remove(
 );
 
 
+/*
+Fully open clone when measuring
+the completed invitation.
+*/
+
 if (openState) {
 
 clone.classList.add(
@@ -806,11 +994,16 @@ clone.classList.add(
 "slide"
 );
 
+
 const cloneButtons =
-clone.querySelector(".buttons");
+clone.querySelector(
+".buttons"
+);
 
 const cloneHint =
-clone.querySelector(".rsvp-hint");
+clone.querySelector(
+".rsvp-hint"
+);
 
 
 if (cloneButtons) {
@@ -833,7 +1026,8 @@ cloneHint.style.opacity =
 
 
 /*
-Put the measuring copy outside the actual layout.
+Move measuring version completely
+outside the real layout.
 */
 
 clone.style.position =
@@ -869,6 +1063,10 @@ clone
 );
 
 
+/*
+Scene's own origin.
+*/
+
 const baseRect =
 clone.getBoundingClientRect();
 
@@ -886,41 +1084,70 @@ let maxBottom =
 -Infinity;
 
 
-const allElements =
-Array.from(
-clone.querySelectorAll("*")
+/*
+Include clone itself.
+*/
+
+const elements =
+[
+clone,
+...clone.querySelectorAll("*")
+];
+
+
+elements.forEach(
+(el) => {
+
+const style =
+window.getComputedStyle(
+el
 );
 
 
-allElements.forEach((el) => {
-
-const style =
-window.getComputedStyle(el);
-
-
 /*
-Ignore elements that truly are not displayed.
-*/
-
-if (style.display === "none") {
-return;
-}
-
-
-/*
-When measuring the CLOSED envelope,
-ignore the invisible card and RSVP pieces.
+Ignore things that are actually removed
+from layout.
 */
 
 if (
-!openState &&
-el.closest(
-".card, .rsvp-hint, .buttons"
-)
+style.display ===
+"none"
 ) {
+
 return;
+
 }
 
+
+/*
+For CLOSED state, do not measure
+the hidden invitation card or buttons.
+*/
+
+if (
+!openState
+) {
+
+if (
+el !== clone &&
+(
+el.matches(".card") ||
+el.closest(".card") ||
+el.matches(".buttons") ||
+el.closest(".buttons")
+)
+) {
+
+return;
+
+}
+
+}
+
+
+/*
+Measure element.
+*/
 
 const rect =
 el.getBoundingClientRect();
@@ -930,7 +1157,9 @@ if (
 rect.width === 0 &&
 rect.height === 0
 ) {
+
 return;
+
 }
 
 
@@ -958,7 +1187,8 @@ maxBottom,
 rect.bottom
 );
 
-});
+}
+);
 
 
 clone.remove();
@@ -967,16 +1197,20 @@ clone.remove();
 return {
 
 left:
-minLeft - baseRect.left,
+minLeft -
+baseRect.left,
 
 right:
-maxRight - baseRect.left,
+maxRight -
+baseRect.left,
 
 top:
-minTop - baseRect.top,
+minTop -
+baseRect.top,
 
 bottom:
-maxBottom - baseRect.top
+maxBottom -
+baseRect.top
 
 };
 
@@ -984,29 +1218,29 @@ maxBottom - baseRect.top
 
 
 /* =====================================================
-      MAXIMUM SAFE FIT
-      ===================================================== */
+   FIT AS LARGE AS POSSIBLE
+   ===================================================== */
 
 function fitInvitationToScreen() {
 
 /*
-Measure BOTH the closed envelope and
-the fully opened invitation.
-
-That means the scaling includes every
-part of the animation.
+Measure both animation states.
 */
 
 const closed =
-measureSceneState(false);
+measureSceneState(
+false
+);
 
 const opened =
-measureSceneState(true);
+measureSceneState(
+true
+);
 
 
 /*
 Create one bounding box that contains
-the entire animation from beginning to end.
+EVERYTHING throughout the animation.
 */
 
 let left =
@@ -1035,123 +1269,203 @@ opened.bottom
 
 
 /*
-Tiny internal buffer for shadows and
-sub-pixel browser rounding.
+Allow room for card and envelope shadows.
 */
 
 const designBuffer =
-8;
+7;
 
-left -= designBuffer;
-right += designBuffer;
-top -= designBuffer;
-bottom += designBuffer;
+left -=
+designBuffer;
+
+right +=
+designBuffer;
+
+top -=
+designBuffer;
+
+bottom +=
+designBuffer;
 
 
 const designWidth =
-right - left;
+right -
+left;
 
 const designHeight =
-bottom - top;
+bottom -
+top;
 
 
 /*
-Make the outer stage EXACTLY the size
-of the entire invitation footprint.
+The stage becomes the exact dimensions
+of the complete animation footprint.
 */
 
 fitStage.style.width =
-designWidth + "px";
+designWidth +
+"px";
 
 fitStage.style.height =
-designHeight + "px";
+designHeight +
+"px";
 
 
 /*
-Move the scene inside that stage so the
-whole design is mathematically centered.
+Shift the original scene so the
+complete footprint begins at 0,0.
 
-This does NOT change any positions inside
-the invitation itself.
+This centers the COMPLETE opened design,
+not just the original envelope.
 */
 
 scene.style.left =
-(-left) + "px";
+(-left) +
+"px";
 
 scene.style.top =
-(-top) + "px";
+(-top) +
+"px";
 
 
-/*
-Use the real visible viewport.
-This is particularly important on iPhones
-and mobile Safari.
-*/
+/* =====================================================
+   ACTUAL VISIBLE VIEWPORT
+   ===================================================== */
+
+const viewport =
+window.visualViewport;
+
 
 const viewportWidth =
-window.visualViewport
-? window.visualViewport.width
-: window.innerWidth;
+viewport
+?
+viewport.width
+:
+window.innerWidth;
+
 
 const viewportHeight =
-window.visualViewport
-? window.visualViewport.height
-: window.innerHeight;
+viewport
+?
+viewport.height
+:
+window.innerHeight;
+
+
+const viewportLeft =
+viewport
+?
+viewport.offsetLeft
+:
+0;
+
+
+const viewportTop =
+viewport
+?
+viewport.offsetTop
+:
+0;
+
+
+/* =====================================================
+   SCREEN EDGE PADDING
+   ===================================================== */
+
+const mobile =
+viewportWidth <=
+500;
 
 
 /*
-Small screen-edge buffer.
+Only a small margin is necessary.
 
-The invitation still gets almost the
-entire screen, but shadows cannot clip.
+visualViewport already removes browser
+toolbar space on iPhones.
 */
 
-const edgePadding =
-window.innerWidth <= 500
-? 10
-: 14;
+const horizontalPadding =
+mobile
+?
+10
+:
+18;
 
 
-const availableWidth =
+const topPadding =
+mobile
+?
+10
+:
+18;
+
+
+const bottomPadding =
+mobile
+?
+14
+:
+18;
+
+
+/*
+Respect iPhone notch / home indicator
+when the browser exposes the safe area.
+*/
+
+const safeWidth =
 Math.max(
 1,
 viewportWidth -
-edgePadding * 2
+horizontalPadding * 2
 );
 
-const availableHeight =
+
+const safeHeight =
 Math.max(
 1,
 viewportHeight -
-edgePadding * 2
+topPadding -
+bottomPadding
 );
 
 
+/* =====================================================
+   MAXIMUM POSSIBLE SCALE
+   ===================================================== */
+
 /*
-THIS IS WHAT MAKES IT AS LARGE AS POSSIBLE.
+NO MAXIMUM SIZE CAP.
 
-There is intentionally NO scale cap.
+This lets a laptop enlarge the design.
 
-If the screen has room, the invitation grows.
-If the screen is smaller, it shrinks.
+A phone will automatically shrink it.
 
-Whichever dimension reaches the screen edge
-first determines the final size.
+Whichever dimension runs out of room first
+determines the final scale.
 */
 
 const fitScale =
 Math.min(
-availableWidth / designWidth,
-availableHeight / designHeight
+
+safeWidth /
+designWidth,
+
+safeHeight /
+designHeight
+
 );
 
 
 /*
-Tiny safety factor prevents one-pixel clipping.
+Tiny safety amount prevents shadows
+from touching the edge due to browser
+sub-pixel rounding.
 */
 
 const safeScale =
-fitScale * 0.985;
+fitScale *
+0.985;
 
 
 fitStage.style.setProperty(
@@ -1159,17 +1473,70 @@ fitStage.style.setProperty(
 safeScale.toFixed(4)
 );
 
+
+/* =====================================================
+   CENTER INSIDE ACTUAL VISIBLE SCREEN
+   ===================================================== */
+
+const safeLeft =
+viewportLeft +
+horizontalPadding;
+
+
+const safeRight =
+viewportLeft +
+viewportWidth -
+horizontalPadding;
+
+
+const safeTop =
+viewportTop +
+topPadding;
+
+
+const safeBottom =
+viewportTop +
+viewportHeight -
+bottomPadding;
+
+
+const centerX =
+safeLeft +
+(
+safeRight -
+safeLeft
+) / 2;
+
+
+const centerY =
+safeTop +
+(
+safeBottom -
+safeTop
+) / 2;
+
+
+fitStage.style.left =
+centerX +
+"px";
+
+
+fitStage.style.top =
+centerY +
+"px";
+
 }
 
 
 /* =====================================================
-      INITIAL FIT
-      ===================================================== */
+   INITIAL FIT
+   ===================================================== */
 
 fitInvitationToScreen();
 
 
-requestAnimationFrame(() => {
+requestAnimationFrame(
+() => {
 
 fitInvitationToScreen();
 
@@ -1177,11 +1544,12 @@ scene.classList.add(
 "ready"
 );
 
-});
+}
+);
 
 
 /*
-Run again after all images finish loading.
+Recalculate after images are fully loaded.
 */
 
 window.addEventListener(
@@ -1195,12 +1563,16 @@ fitInvitationToScreen();
 
 
 /* =====================================================
-      RESPONSIVE REFIT
-      ===================================================== */
+   RESPONSIVE REFIT
+   ===================================================== */
 
 window.addEventListener(
 "resize",
-fitInvitationToScreen
+() => {
+
+fitInvitationToScreen();
+
+}
 );
 
 
@@ -1209,71 +1581,114 @@ window.addEventListener(
 () => {
 
 setTimeout(
-fitInvitationToScreen,
-120
+() => {
+
+fitInvitationToScreen();
+
+},
+150
 );
 
 }
 );
 
 
-if (window.visualViewport) {
+/*
+Very important for iPhone Safari because
+the visible viewport changes when the
+browser bars expand/collapse.
+*/
+
+if (
+window.visualViewport
+) {
 
 window.visualViewport.addEventListener(
 "resize",
-fitInvitationToScreen
+() => {
+
+fitInvitationToScreen();
+
+}
+);
+
+
+window.visualViewport.addEventListener(
+"scroll",
+() => {
+
+fitInvitationToScreen();
+
+}
 );
 
 }
 
 
 /* =====================================================
-      DESKTOP ROCKET CURSOR
-      ===================================================== */
+   DESKTOP ROCKET CURSOR
+   ===================================================== */
 
 document.addEventListener(
 "mousemove",
 (e) => {
 
 rocketCursor.style.left =
-e.clientX + "px";
+e.clientX +
+"px";
 
 rocketCursor.style.top =
-e.clientY + "px";
+e.clientY +
+"px";
 
 }
 );
 
 
 /* =====================================================
-      MOBILE TOUCH ROCKET
-      ===================================================== */
+   MOBILE TOUCH ROCKET
+   ===================================================== */
 
-function moveTouchRocket(x, y) {
+function moveTouchRocket(
+x,
+y
+) {
 
 touchRocket.style.left =
-x + "px";
+x +
+"px";
 
 touchRocket.style.top =
-y + "px";
+y +
+"px";
 
 }
 
 
-function startTouchRocket(e) {
+function startTouchRocket(
+e
+) {
 
-if (e.pointerType !== "touch") {
+if (
+e.pointerType !==
+"touch"
+) {
+
 return;
+
 }
+
 
 moveTouchRocket(
 e.clientX,
 e.clientY
 );
 
+
 touchRocket.classList.remove(
 "launch"
 );
+
 
 touchRocket.classList.add(
 "touching"
@@ -1282,11 +1697,19 @@ touchRocket.classList.add(
 }
 
 
-function moveTouchRocketEvent(e) {
+function moveTouchRocketEvent(
+e
+) {
 
-if (e.pointerType !== "touch") {
+if (
+e.pointerType !==
+"touch"
+) {
+
 return;
+
 }
+
 
 moveTouchRocket(
 e.clientX,
@@ -1296,21 +1719,32 @@ e.clientY
 }
 
 
-function finishTouchRocket(e) {
+function finishTouchRocket(
+e
+) {
 
-if (e.pointerType !== "touch") {
+if (
+e.pointerType !==
+"touch"
+) {
+
 return;
+
 }
+
 
 touchRocket.classList.remove(
 "touching"
 );
 
+
 touchRocket.classList.remove(
 "launch"
 );
 
+
 void touchRocket.offsetWidth;
+
 
 touchRocket.classList.add(
 "launch"
@@ -1331,15 +1765,24 @@ touchRocket.classList.remove(
 }
 
 
-function cancelTouchRocket(e) {
+function cancelTouchRocket(
+e
+) {
 
-if (e.pointerType !== "touch") {
+if (
+e.pointerType !==
+"touch"
+) {
+
 return;
+
 }
+
 
 touchRocket.classList.remove(
 "touching"
 );
+
 
 touchRocket.classList.remove(
 "launch"
@@ -1348,20 +1791,27 @@ touchRocket.classList.remove(
 }
 
 
+/* =====================================================
+   TOUCH LISTENERS
+   ===================================================== */
+
 document.addEventListener(
 "pointerdown",
 startTouchRocket
 );
+
 
 document.addEventListener(
 "pointermove",
 moveTouchRocketEvent
 );
 
+
 document.addEventListener(
 "pointerup",
 finishTouchRocket
 );
+
 
 document.addEventListener(
 "pointercancel",
@@ -1370,8 +1820,8 @@ cancelTouchRocket
 
 
 /* =====================================================
-      OPEN INVITATION
-      ===================================================== */
+   OPEN INVITATION
+   ===================================================== */
 
 let invitationOpening =
 false;
@@ -1381,9 +1831,13 @@ function openInvitation() {
 
 if (
 invitationOpening ||
-scene.classList.contains("spin")
+scene.classList.contains(
+"spin"
+)
 ) {
+
 return;
+
 }
 
 
@@ -1391,14 +1845,18 @@ invitationOpening =
 true;
 
 
-/* FLIP ENVELOPE */
+/*
+Flip envelope.
+*/
 
 scene.classList.add(
 "spin"
 );
 
 
-/* OPEN FLAP */
+/*
+Open flap.
+*/
 
 setTimeout(
 () => {
@@ -1412,7 +1870,9 @@ scene.classList.add(
 );
 
 
-/* PULL CARD OUT */
+/*
+Pull invitation card upward.
+*/
 
 setTimeout(
 () => {
@@ -1421,12 +1881,33 @@ scene.classList.add(
 "slide"
 );
 
+
+/*
+Reveal RSVP controls.
+*/
+
 buttons.classList.add(
 "show"
 );
 
+
 rsvpHint.style.opacity =
 "1";
+
+
+/*
+Refit once buttons are actually visible.
+
+This makes sure Safari cannot cut them off.
+*/
+
+requestAnimationFrame(
+() => {
+
+fitInvitationToScreen();
+
+}
+);
 
 },
 1600
@@ -1436,12 +1917,14 @@ rsvpHint.style.opacity =
 
 
 /* =====================================================
-      ENVELOPE INTERACTION
-      ===================================================== */
+   ENVELOPE INTERACTION
+   ===================================================== */
 
 envelope.addEventListener(
 "pointerup",
 (e) => {
+
+e.preventDefault();
 
 e.stopPropagation();
 
@@ -1452,32 +1935,44 @@ openInvitation();
 
 
 /* =====================================================
-      RSVP
-      ===================================================== */
+   RSVP
+   ===================================================== */
 
 const phone =
 "+16166489671";
 
 
-function sendRSVP(status) {
+function sendRSVP(
+status
+) {
 
 const body =
 `RSVP: ${status} Charlie's 7th Birthday Party.`;
 
+
 const encoded =
-encodeURIComponent(body);
+encodeURIComponent(
+body
+);
+
 
 const ua =
-navigator.userAgent || "";
+navigator.userAgent ||
+"";
+
 
 const isIOS =
-/iPad|iPhone|iPod/.test(ua);
+/iPad|iPhone|iPod/.test(
+ua
+);
 
 
 const link =
 isIOS
-? `sms:${phone}&body=${encoded}`
-: `sms:${phone}?body=${encoded}`;
+?
+`sms:${phone}&body=${encoded}`
+:
+`sms:${phone}?body=${encoded}`;
 
 
 try {
@@ -1487,7 +1982,9 @@ link;
 
 }
 
-catch (err) {
+catch (
+err
+) {
 
 alert(
 `Please text ${phone} with: ${body}`
@@ -1499,15 +1996,17 @@ alert(
 
 
 /* =====================================================
-      ATTENDING
-      ===================================================== */
+   ATTENDING BUTTON
+   ===================================================== */
 
 attendButton.addEventListener(
 "pointerup",
 (e) => {
 
 e.preventDefault();
+
 e.stopPropagation();
+
 
 sendRSVP(
 "Attending"
@@ -1518,15 +2017,17 @@ sendRSVP(
 
 
 /* =====================================================
-      NOT ATTENDING
-      ===================================================== */
+   NOT ATTENDING BUTTON
+   ===================================================== */
 
 declineButton.addEventListener(
 "pointerup",
 (e) => {
 
 e.preventDefault();
+
 e.stopPropagation();
+
 
 sendRSVP(
 "Not Attending"
@@ -1537,5 +2038,7 @@ sendRSVP(
 
 </script>
 
+
 </body>
+
 </html>
