@@ -1,1151 +1,1176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>CHARLIE'S 7TH BDAY</title>
+<title>CHARLIE'S 7TH BDAY</title>
 
-  <meta property="og:title" content="CHARLIE'S 7TH BDAY" />
-  <meta
-    property="og:description"
-    content="You're invited to Charlie's 7th Birthday! Tap to RSVP."
-  />
-  <meta property="og:image" content="https://i.imgur.com/nbBLGks.png" />
-  <meta property="og:type" content="website" />
+<meta property="og:title" content="CHARLIE'S 7TH BDAY" />
+<meta
+property="og:description"
+content="You're invited to Charlie's 7th Birthday! Tap to RSVP."
+/>
+<meta property="og:image" content="https://i.imgur.com/nbBLGks.png" />
+<meta property="og:type" content="website" />
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+box-sizing: border-box;
+}
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+html,
+body {
+width: 100%;
+height: 100%;
+margin: 0;
+padding: 0;
+}
 
-    body {
-      background: #f0f2f7;
+body {
+background: #f0f2f7;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+display: flex;
+justify-content: center;
+align-items: center;
 
-      min-height: 100vh;
-      overflow: hidden;
+min-height: 100vh;
+overflow: hidden;
 
-      font-family: Arial, Helvetica, sans-serif;
-    }
+font-family: Arial, Helvetica, sans-serif;
+}
 
-    /* =====================================================
-       MAIN SCENE
-       ===================================================== */
+/* =====================================================
+      MAIN SCENE
+      ===================================================== */
 
-    .scene {
-      position: relative;
+.scene {
+position: relative;
 
-      perspective: 1400px;
+perspective: 1400px;
 
-      text-align: center;
+text-align: center;
 
-      opacity: 0;
+opacity: 0;
 
-      /*
-        The scale is calculated automatically in JavaScript so the entire
-        envelope/card/RSVP area is as large as possible without clipping.
-        Everything scales together, so all positions and animations stay intact.
-      */
-      transform: scale(var(--scene-pre-scale, 1));
-      transform-origin: center center;
+transform: scale(0.98);
 
-      transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-    }
+/*
+  The scale is calculated automatically in JavaScript so the entire
+  envelope/card/RSVP area is as large as possible without clipping.
+  Everything scales together, so all positions and animations stay intact.
+*/
 
-    .scene.ready {
-      opacity: 1;
-      transform: scale(var(--scene-scale, 1));
-    }
+transform: scale(var(--scene-pre-scale, 1));
+transform-origin: center center;
 
-    /* =====================================================
-       ENVELOPE
-       ===================================================== */
+transition:
+opacity 0.6s ease,
+transform 0.6s ease;
+}
 
-    .envelope {
-      width: 320px;
-      height: 230px;
+.scene.ready {
+opacity: 1;
 
-      position: relative;
+transform: scale(1);
+transform: scale(var(--scene-scale, 1));
+}
 
-      transform-style: preserve-3d;
+/* =====================================================
+      ENVELOPE
+      ===================================================== */
 
-      transition: transform 0.8s ease;
+.envelope {
+width: 320px;
+height: 230px;
 
-      -webkit-tap-highlight-color: transparent;
+position: relative;
 
-      touch-action: manipulation;
-    }
+transform-style: preserve-3d;
 
-    .face {
-      position: absolute;
+transition: transform 0.8s ease;
 
-      width: 100%;
-      height: 100%;
+-webkit-tap-highlight-color: transparent;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+touch-action: manipulation;
+}
 
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
+.face {
+position: absolute;
 
-      border-radius: 6px;
+width: 100%;
+height: 100%;
 
-      box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.2);
-    }
+display: flex;
+align-items: center;
+justify-content: center;
 
-    /* =====================================================
-       FRONT OF ENVELOPE
-       ===================================================== */
+backface-visibility: hidden;
+-webkit-backface-visibility: hidden;
 
-    .front {
-      background: linear-gradient(#ffffff, #f3f4f6);
+border-radius: 6px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+box-shadow:
+0 6px 15px rgba(0, 0, 0, 0.2);
+}
 
-      padding: 18px;
-    }
+/* =====================================================
+      FRONT OF ENVELOPE
+      ===================================================== */
 
-    .invite-title {
-      display: block;
+.front {
+background: linear-gradient(#ffffff, #f3f4f6);
 
-      width: 78%;
-      max-width: 245px;
-      height: auto;
+display: flex;
+align-items: center;
+justify-content: center;
 
-      object-fit: contain;
+padding: 18px;
+}
 
-      pointer-events: none;
+.invite-title {
+display: block;
 
-      user-select: none;
-      -webkit-user-drag: none;
-    }
+width: 78%;
+max-width: 245px;
+height: auto;
 
-    /* =====================================================
-       BACK OF ENVELOPE
-       ===================================================== */
+object-fit: contain;
 
-    .back {
-      transform: rotateY(180deg);
+pointer-events: none;
 
-      background: linear-gradient(#ffffff, #f3f4f6);
+user-select: none;
+-webkit-user-drag: none;
+}
 
-      overflow: visible;
-    }
+/* =====================================================
+      BACK OF ENVELOPE
+      ===================================================== */
 
-    /* =====================================================
-       ENVELOPE FLAP
-       ===================================================== */
+.back {
+transform: rotateY(180deg);
 
-    .flap {
-      position: absolute;
+background: linear-gradient(#ffffff, #f3f4f6);
 
-      top: 0;
-      left: 0;
+overflow: visible;
+}
 
-      width: 100%;
-      height: 45%;
+/* =====================================================
+      ENVELOPE FLAP
+      ===================================================== */
 
-      background: linear-gradient(#ffffff, #e6e7eb);
+.flap {
+position: absolute;
 
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
+top: 0;
+left: 0;
 
-      transform-origin: top center;
+width: 100%;
+height: 45%;
 
-      transition: transform 0.8s ease;
+background: linear-gradient(#ffffff, #e6e7eb);
 
-      z-index: 2;
+clip-path: polygon(0 0, 100% 0, 50% 100%);
 
-      box-shadow:
-        inset 0 -3px 5px rgba(0, 0, 0, 0.15),
-        0 3px 6px rgba(0, 0, 0, 0.2);
-    }
+transform-origin: top center;
 
-    /* =====================================================
-       ENVELOPE POCKET
-       ===================================================== */
+transition: transform 0.8s ease;
 
-    .pocket {
-      position: absolute;
+z-index: 2;
 
-      bottom: 0;
-      left: 0;
+box-shadow:
+inset 0 -3px 5px rgba(0, 0, 0, 0.15),
+0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
-      width: 100%;
-      height: 55%;
+/* =====================================================
+      ENVELOPE POCKET
+      ===================================================== */
 
-      background: #f8f9fb;
-    }
+.pocket {
+position: absolute;
 
-    /* =====================================================
-       INVITATION CARD
-       ===================================================== */
+bottom: 0;
+left: 0;
 
-    .card {
-      position: absolute;
+width: 100%;
+height: 55%;
 
-      width: 280px;
-      height: 400px;
+background: #f8f9fb;
+}
 
-      background: white;
+/* =====================================================
+      INVITATION CARD
+      ===================================================== */
 
-      left: 50%;
-      top: 90%;
+.card {
+position: absolute;
 
-      transform: translate(-50%, 0);
+width: 280px;
+height: 400px;
 
-      opacity: 0;
+background: white;
 
-      transition:
-        transform 0.9s ease,
-        opacity 0.4s ease;
+left: 50%;
+top: 90%;
 
-      box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.18);
+transform: translate(-50%, 0);
 
-      z-index: 3;
-    }
+opacity: 0;
 
-    .card img {
-      display: block;
+transition:
+transform 0.9s ease,
+opacity 0.4s ease;
 
-      width: 100%;
-      height: 100%;
+box-shadow:
+0 8px 20px rgba(0, 0, 0, 0.18);
 
-      object-fit: contain;
-    }
+z-index: 3;
+}
 
-    /* =====================================================
-       ENVELOPE ANIMATION
-       ===================================================== */
+.card img {
+display: block;
 
-    .scene.spin .envelope {
-      transform: rotateY(180deg);
-    }
+width: 100%;
+height: 100%;
 
-    .scene.open .flap {
-      transform: rotateX(-160deg);
-    }
+object-fit: contain;
+}
 
-    .scene.slide .card {
-      opacity: 1;
+/* =====================================================
+      ENVELOPE ANIMATION
+      ===================================================== */
 
-      transform: translate(-50%, -120%);
-    }
+.scene.spin .envelope {
+transform: rotateY(180deg);
+}
 
-    /* =====================================================
-       RSVP HINT
-       ===================================================== */
+.scene.open .flap {
+transform: rotateX(-160deg);
+}
 
-    .rsvp-hint {
-      font-size: 1.05em;
-      font-weight: bold;
+.scene.slide .card {
+opacity: 1;
 
-      color: #444;
+transform: translate(-50%, -120%);
+}
 
-      margin: 12px 0 6px;
+/* =====================================================
+      RSVP HINT
+      ===================================================== */
 
-      opacity: 0;
+.rsvp-hint {
+font-size: 1.05em;
+font-weight: bold;
 
-      transition: opacity 0.4s ease;
-    }
+color: #444;
 
-    /* =====================================================
-       RSVP BUTTONS
-       ===================================================== */
+margin: 12px 0 6px;
 
-    .buttons {
-      margin-top: 8px;
+opacity: 0;
 
-      display: none;
+transition: opacity 0.4s ease;
+}
 
-      gap: 10px;
+/* =====================================================
+      RSVP BUTTONS
+      ===================================================== */
 
-      justify-content: center;
-      flex-wrap: wrap;
+.buttons {
+margin-top: 8px;
 
-      position: relative;
+display: none;
 
-      z-index: 50;
-    }
+gap: 10px;
 
-    .buttons.show {
-      display: flex;
-    }
+justify-content: center;
+flex-wrap: wrap;
 
-    .buttons button {
-      display: flex;
-      align-items: center;
+position: relative;
 
-      gap: 6px;
+z-index: 50;
+}
 
-      padding: 10px 15px;
+.buttons.show {
+display: flex;
+}
 
-      font-size: 1em;
+.buttons button {
+display: flex;
+align-items: center;
 
-      border: none;
+gap: 6px;
 
-      border-radius: 5px;
+padding: 10px 15px;
 
-      transition:
-        box-shadow 0.3s ease,
-        transform 0.2s ease;
+font-size: 1em;
 
-      -webkit-tap-highlight-color: transparent;
+border: none;
 
-      touch-action: manipulation;
+border-radius: 5px;
 
-      position: relative;
+transition:
+box-shadow 0.3s ease,
+transform 0.2s ease;
 
-      z-index: 51;
-    }
+-webkit-tap-highlight-color: transparent;
 
-    .attend {
-      background-color: #695791;
-      color: white;
-    }
+touch-action: manipulation;
 
-    .decline {
-      background-color: #e96485;
-      color: white;
-    }
+position: relative;
 
-    @media (hover: hover) and (pointer: fine) {
-      .buttons button:hover {
-        box-shadow:
-          0 0 15px rgba(255, 215, 0, 0.7);
+z-index: 51;
+}
 
-        transform: scale(1.05);
-      }
-    }
+.attend {
+background-color: #695791;
+color: white;
+}
 
-    .buttons button:active {
-      transform: scale(0.97);
+.decline {
+background-color: #e96485;
+color: white;
+}
 
-      box-shadow:
-        0 0 12px rgba(255, 215, 0, 0.6);
-    }
+@media (hover: hover) and (pointer: fine) {
+.buttons button:hover {
+box-shadow:
+0 0 15px rgba(255, 215, 0, 0.7);
 
-    /* =====================================================
-       DESKTOP ROCKET CURSOR
-       ===================================================== */
+transform: scale(1.05);
+}
+}
 
-    #rocketCursor {
-      display: none;
-    }
+.buttons button:active {
+transform: scale(0.97);
 
-    @media (hover: hover) and (pointer: fine) {
-      html,
-      body,
-      body *,
-      button {
-        cursor: none !important;
-      }
+box-shadow:
+0 0 12px rgba(255, 215, 0, 0.6);
+}
 
-      #rocketCursor {
-        display: block;
+/* =====================================================
+      DESKTOP ROCKET CURSOR
+      ===================================================== */
 
-        position: fixed;
+#rocketCursor {
+display: none;
+}
 
-        top: 0;
-        left: 0;
+@media (hover: hover) and (pointer: fine) {
+html,
+body,
+body *,
+button {
+cursor: none !important;
+}
 
-        width: 65px;
-        height: 65px;
+#rocketCursor {
+display: block;
 
-        pointer-events: none;
+position: fixed;
 
-        z-index: 999999;
+top: 0;
+left: 0;
 
-        transform: translate(-50%, -50%);
+width: 65px;
+height: 65px;
 
-        will-change: left, top;
-      }
+pointer-events: none;
 
-      #rocketCursor img {
-        display: block;
+z-index: 999999;
 
-        width: 100%;
-        height: 100%;
+transform: translate(-50%, -50%);
 
-        object-fit: contain;
+will-change: left, top;
+}
 
-        pointer-events: none;
+#rocketCursor img {
+display: block;
 
-        user-select: none;
-        -webkit-user-drag: none;
-      }
-    }
+width: 100%;
+height: 100%;
 
-    @media (hover: none), (pointer: coarse) {
-      #rocketCursor {
-        display: none !important;
-      }
-    }
+object-fit: contain;
 
-    /* =====================================================
-       MOBILE TOUCH ROCKET
-       ===================================================== */
+pointer-events: none;
 
-    #touchRocket {
-      display: none;
+user-select: none;
+-webkit-user-drag: none;
+}
+}
 
-      position: fixed;
+@media (hover: none), (pointer: coarse) {
+#rocketCursor {
+display: none !important;
+}
+}
 
-      top: 0;
-      left: 0;
+/* =====================================================
+      MOBILE TOUCH ROCKET
+      ===================================================== */
 
-      width: 58px;
-      height: 58px;
+#touchRocket {
+display: none;
 
-      pointer-events: none;
+position: fixed;
 
-      z-index: 9999999;
+top: 0;
+left: 0;
 
-      opacity: 0;
+width: 58px;
+height: 58px;
 
-      transform: translate(-50%, -50%);
+pointer-events: none;
 
-      will-change:
-        left,
-        top,
-        transform,
-        opacity;
-    }
+z-index: 9999999;
 
-    #touchRocket img {
-      display: block;
+opacity: 0;
 
-      width: 100%;
-      height: 100%;
+transform: translate(-50%, -50%);
 
-      object-fit: contain;
+will-change:
+left,
+top,
+transform,
+opacity;
+}
 
-      pointer-events: none;
+#touchRocket img {
+display: block;
 
-      user-select: none;
-      -webkit-user-drag: none;
-    }
+width: 100%;
+height: 100%;
 
-    @media (hover: none), (pointer: coarse) {
-      #touchRocket {
-        display: block;
-      }
+object-fit: contain;
 
-      #touchRocket.touching {
-        opacity: 1;
+pointer-events: none;
 
-        transform:
-          translate(-50%, -50%)
-          scale(1);
-      }
+user-select: none;
+-webkit-user-drag: none;
+}
 
-      #touchRocket.launch {
-        animation:
-          touchRocketLaunch
-          0.38s
-          ease-out
-          forwards;
-      }
-    }
+@media (hover: none), (pointer: coarse) {
+#touchRocket {
+display: block;
+}
 
-    /* =====================================================
-       MOBILE ROCKET LAUNCH
-       ===================================================== */
+#touchRocket.touching {
+opacity: 1;
 
-    @keyframes touchRocketLaunch {
-      0% {
-        opacity: 1;
+transform:
+translate(-50%, -50%)
+scale(1);
+}
 
-        transform:
-          translate(-50%, -50%)
-          scale(1);
-      }
+#touchRocket.launch {
+animation:
+touchRocketLaunch
+0.38s
+ease-out
+forwards;
+}
+}
 
-      35% {
-        opacity: 1;
+/* =====================================================
+      MOBILE ROCKET LAUNCH
+      ===================================================== */
 
-        transform:
-          translate(-50%, -70%)
-          scale(1.12);
-      }
+@keyframes touchRocketLaunch {
+0% {
+opacity: 1;
 
-      100% {
-        opacity: 0;
+transform:
+translate(-50%, -50%)
+scale(1);
+}
 
-        transform:
-          translate(-50%, -125%)
-          scale(0.88);
-      }
-    }
+35% {
+opacity: 1;
 
-    /* =====================================================
-       MOBILE
-       ===================================================== */
+transform:
+translate(-50%, -70%)
+scale(1.12);
+}
 
-    @media (max-width: 500px) {
-      .envelope {
-        width: 300px;
-        height: 216px;
-      }
+100% {
+opacity: 0;
 
-      .card {
-        width: 265px;
-        height: 379px;
-      }
+transform:
+translate(-50%, -125%)
+scale(0.88);
+}
+}
 
-      .invite-title {
-        width: 80%;
-        max-width: 225px;
-      }
-    }
-  </style>
+/* =====================================================
+      MOBILE
+      ===================================================== */
+
+@media (max-width: 500px) {
+.envelope {
+width: 300px;
+height: 216px;
+}
+
+.card {
+width: 265px;
+height: 379px;
+}
+
+.invite-title {
+width: 80%;
+max-width: 225px;
+}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =====================================================
-       DESKTOP ROCKET CURSOR
-       ===================================================== -->
+<!-- =====================================================
+      DESKTOP ROCKET CURSOR
+      ===================================================== -->
 
-  <div id="rocketCursor">
-    <img
-      src="https://i.imgur.com/vkgyQTf.png"
-      alt=""
-    />
-  </div>
+<div id="rocketCursor">
+<img
+src="https://i.imgur.com/vkgyQTf.png"
+alt=""
+/>
+</div>
 
-  <!-- =====================================================
-       MOBILE TOUCH ROCKET
-       ===================================================== -->
+<!-- =====================================================
+      MOBILE TOUCH ROCKET
+      ===================================================== -->
 
-  <div id="touchRocket">
-    <img
-      src="https://i.imgur.com/vkgyQTf.png"
-      alt=""
-    />
-  </div>
+<div id="touchRocket">
+<img
+src="https://i.imgur.com/vkgyQTf.png"
+alt=""
+/>
+</div>
 
-  <!-- =====================================================
-       INVITATION
-       ===================================================== -->
+<!-- =====================================================
+      INVITATION
+      ===================================================== -->
 
-  <div
-    class="scene ready"
-    id="scene"
-  >
+<div
+class="scene ready"
+id="scene"
+>
 
-    <div
-      class="envelope"
-      id="envelope"
-    >
+<div
+class="envelope"
+id="envelope"
+>
 
-      <!-- FRONT OF ENVELOPE -->
+<!-- FRONT OF ENVELOPE -->
 
-      <div class="face front">
+<div class="face front">
 
-        <img
-          src="https://i.imgur.com/16AMs2z.png"
-          alt="You're Invited"
-          class="invite-title"
-        />
+<img
+src="https://i.imgur.com/XF0hZiS.png"
+alt="You're Invited"
+class="invite-title"
+/>
 
-      </div>
+</div>
 
-      <!-- BACK OF ENVELOPE -->
+<!-- BACK OF ENVELOPE -->
 
-      <div class="face back">
+<div class="face back">
 
-        <div class="flap"></div>
+<div class="flap"></div>
 
-        <div class="pocket"></div>
+<div class="pocket"></div>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-    <!-- INVITATION CARD -->
+<!-- INVITATION CARD -->
 
-    <div
-      class="card"
-      id="card"
-    >
+<div
+class="card"
+id="card"
+>
 
-      <img
-        src="https://i.imgur.com/ReJ4ZkE.png"
-        alt="Charlie's 7th Birthday Invitation"
-      />
+<img
+src="https://i.imgur.com/16AMs2z.png"
+alt="Charlie's 7th Birthday Invitation"
+/>
 
-    </div>
+</div>
 
-    <!-- RSVP TEXT -->
+<!-- RSVP TEXT -->
 
-    <div
-      class="rsvp-hint"
-      id="rsvpHint"
-    >
-      Tap to RSVP
-    </div>
+<div
+class="rsvp-hint"
+id="rsvpHint"
+>
+Tap to RSVP
+</div>
 
-    <!-- RSVP BUTTONS -->
+<!-- RSVP BUTTONS -->
 
-    <div
-      class="buttons"
-      id="buttons"
-    >
+<div
+class="buttons"
+id="buttons"
+>
 
-      <button
-        class="attend"
-        id="attendButton"
-        type="button"
-      >
-        Attending
-      </button>
+<button
+class="attend"
+id="attendButton"
+type="button"
+>
+Attending
+</button>
 
-      <button
-        class="decline"
-        id="declineButton"
-        type="button"
-      >
-        Not Attending
-      </button>
+<button
+class="decline"
+id="declineButton"
+type="button"
+>
+Not Attending
+</button>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
-  <script>
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
+<script>
+/* =====================================================
+      ELEMENTS
+      ===================================================== */
 
-    const scene =
-      document.getElementById("scene");
+const scene =
+document.getElementById("scene");
 
-    const envelope =
-      document.getElementById("envelope");
+const envelope =
+document.getElementById("envelope");
 
-    const buttons =
-      document.getElementById("buttons");
+const buttons =
+document.getElementById("buttons");
 
-    const rsvpHint =
-      document.getElementById("rsvpHint");
+const rsvpHint =
+document.getElementById("rsvpHint");
 
-    const rocketCursor =
-      document.getElementById("rocketCursor");
+const rocketCursor =
+document.getElementById("rocketCursor");
 
-    const touchRocket =
-      document.getElementById("touchRocket");
+const touchRocket =
+document.getElementById("touchRocket");
 
-    const attendButton =
-      document.getElementById("attendButton");
+const attendButton =
+document.getElementById("attendButton");
 
-    const declineButton =
-      document.getElementById("declineButton");
+const declineButton =
+document.getElementById("declineButton");
 
 
-    /* =====================================================
-       MAXIMUM SAFE INVITATION SCALE
-       ===================================================== */
+/* =====================================================
+   MAXIMUM SAFE INVITATION SCALE
+   ===================================================== */
 
-    function measureSceneState(openState = false) {
-      const clone = scene.cloneNode(true);
+function measureSceneState(openState = false) {
 
-      clone.removeAttribute("id");
-      clone.querySelectorAll("[id]").forEach((el) => {
-        el.removeAttribute("id");
-      });
+const clone =
+scene.cloneNode(true);
 
-      clone.classList.remove("ready", "spin", "open", "slide");
+clone.removeAttribute("id");
 
-      if (openState) {
-        clone.classList.add("spin", "open", "slide");
+clone.querySelectorAll("[id]").forEach((el) => {
+el.removeAttribute("id");
+});
 
-        const cloneButtons =
-          clone.querySelector(".buttons");
+clone.classList.remove(
+"ready",
+"spin",
+"open",
+"slide"
+);
 
-        const cloneHint =
-          clone.querySelector(".rsvp-hint");
+if (openState) {
 
-        if (cloneButtons) {
-          cloneButtons.classList.add("show");
-        }
+clone.classList.add(
+"spin",
+"open",
+"slide"
+);
 
-        if (cloneHint) {
-          cloneHint.style.opacity = "1";
-        }
-      }
+const cloneButtons =
+clone.querySelector(".buttons");
 
-      clone.style.position = "fixed";
-      clone.style.left = "0";
-      clone.style.top = "0";
-      clone.style.width = scene.offsetWidth + "px";
-      clone.style.opacity = "1";
-      clone.style.visibility = "hidden";
-      clone.style.pointerEvents = "none";
-      clone.style.transform = "none";
-      clone.style.transition = "none";
-      clone.style.zIndex = "-999999";
+const cloneHint =
+clone.querySelector(".rsvp-hint");
 
-      document.body.appendChild(clone);
+if (cloneButtons) {
+cloneButtons.classList.add("show");
+}
 
-      const cloneRect =
-        clone.getBoundingClientRect();
+if (cloneHint) {
+cloneHint.style.opacity = "1";
+}
 
-      let minLeft = cloneRect.left;
-      let maxRight = cloneRect.right;
-      let minTop = cloneRect.top;
-      let maxBottom = cloneRect.bottom;
+}
 
-      clone
-        .querySelectorAll("*")
-        .forEach((el) => {
+clone.style.position = "fixed";
+clone.style.left = "0";
+clone.style.top = "0";
+clone.style.width = scene.offsetWidth + "px";
+clone.style.opacity = "1";
+clone.style.visibility = "hidden";
+clone.style.pointerEvents = "none";
+clone.style.transform = "none";
+clone.style.transition = "none";
+clone.style.zIndex = "-999999";
 
-          const style =
-            window.getComputedStyle(el);
+document.body.appendChild(clone);
 
-          if (
-            style.display === "none" ||
-            style.visibility === "hidden"
-          ) {
-            return;
-          }
-
-          const rect =
-            el.getBoundingClientRect();
+const cloneRect =
+clone.getBoundingClientRect();
 
-          if (
-            rect.width === 0 &&
-            rect.height === 0
-          ) {
-            return;
-          }
+let minLeft = cloneRect.left;
+let maxRight = cloneRect.right;
+let minTop = cloneRect.top;
+let maxBottom = cloneRect.bottom;
 
-          minLeft =
-            Math.min(minLeft, rect.left);
+clone
+.querySelectorAll("*")
+.forEach((el) => {
 
-          maxRight =
-            Math.max(maxRight, rect.right);
-
-          minTop =
-            Math.min(minTop, rect.top);
-
-          maxBottom =
-            Math.max(maxBottom, rect.bottom);
+const style =
+window.getComputedStyle(el);
 
-        });
+if (
+style.display === "none" ||
+style.visibility === "hidden"
+) {
+return;
+}
 
-      clone.remove();
+const rect =
+el.getBoundingClientRect();
 
-      return {
-        width: maxRight - minLeft,
-        height: maxBottom - minTop
-      };
-    }
+if (
+rect.width === 0 &&
+rect.height === 0
+) {
+return;
+}
 
+minLeft =
+Math.min(minLeft, rect.left);
 
-    function setMaximumSafeScale() {
+maxRight =
+Math.max(maxRight, rect.right);
 
-      /*
-        Leave a small breathing room around the edges so browser rounding,
-        shadows and mobile safe areas never clip the invitation.
-      */
-      const edgePadding = 16;
+minTop =
+Math.min(minTop, rect.top);
 
-      const closed =
-        measureSceneState(false);
+maxBottom =
+Math.max(maxBottom, rect.bottom);
 
-      const opened =
-        measureSceneState(true);
+});
 
-      const designWidth =
-        Math.max(
-          closed.width,
-          opened.width
-        );
+clone.remove();
 
-      const designHeight =
-        Math.max(
-          closed.height,
-          opened.height
-        );
+return {
+width: maxRight - minLeft,
+height: maxBottom - minTop
+};
 
-      const availableWidth =
-        Math.max(
-          1,
-          window.innerWidth -
-          edgePadding * 2
-        );
+}
 
-      const availableHeight =
-        Math.max(
-          1,
-          window.innerHeight -
-          edgePadding * 2
-        );
 
-      const maxScale =
-        Math.min(
-          availableWidth / designWidth,
-          availableHeight / designHeight
-        );
+function setMaximumSafeScale() {
 
-      /*
-        Use essentially the full safe size.
-        The tiny 0.99 factor protects against sub-pixel rounding.
-      */
-      const safeScale =
-        maxScale * 0.99;
+/*
+  Leave a small breathing room around the edges so browser rounding,
+  shadows and mobile safe areas never clip the invitation.
+*/
 
-      const preScale =
-        safeScale * 0.98;
+const edgePadding = 16;
 
-      scene.style.setProperty(
-        "--scene-scale",
-        safeScale.toFixed(4)
-      );
+const closed =
+measureSceneState(false);
 
-      scene.style.setProperty(
-        "--scene-pre-scale",
-        preScale.toFixed(4)
-      );
-    }
+const opened =
+measureSceneState(true);
 
+const designWidth =
+Math.max(
+closed.width,
+opened.width
+);
 
-    setMaximumSafeScale();
+const designHeight =
+Math.max(
+closed.height,
+opened.height
+);
 
-    window.addEventListener(
-      "resize",
-      setMaximumSafeScale
-    );
+const availableWidth =
+Math.max(
+1,
+window.innerWidth -
+edgePadding * 2
+);
 
-    window.addEventListener(
-      "orientationchange",
-      () => {
-        setTimeout(
-          setMaximumSafeScale,
-          120
-        );
-      }
-    );
+const availableHeight =
+Math.max(
+1,
+window.innerHeight -
+edgePadding * 2
+);
 
+const maxScale =
+Math.min(
+availableWidth / designWidth,
+availableHeight / designHeight
+);
 
-    /* =====================================================
-       DESKTOP ROCKET CURSOR
-       ===================================================== */
+/*
+  Use essentially the full safe size.
+  The tiny 0.99 factor protects against sub-pixel rounding.
+*/
 
-    document.addEventListener(
-      "mousemove",
-      (e) => {
+const safeScale =
+maxScale * 0.99;
 
-        rocketCursor.style.left =
-          e.clientX + "px";
+const preScale =
+safeScale * 0.98;
 
-        rocketCursor.style.top =
-          e.clientY + "px";
+scene.style.setProperty(
+"--scene-scale",
+safeScale.toFixed(4)
+);
 
-      }
-    );
+scene.style.setProperty(
+"--scene-pre-scale",
+preScale.toFixed(4)
+);
 
+}
 
-    /* =====================================================
-       MOBILE TOUCH ROCKET
-       ===================================================== */
 
-    function moveTouchRocket(x, y) {
+setMaximumSafeScale();
 
-      touchRocket.style.left =
-        x + "px";
+window.addEventListener(
+"resize",
+setMaximumSafeScale
+);
 
-      touchRocket.style.top =
-        y + "px";
+window.addEventListener(
+"orientationchange",
+() => {
 
-    }
+setTimeout(
+setMaximumSafeScale,
+120
+);
 
+}
+);
 
-    function startTouchRocket(e) {
 
-      if (e.pointerType !== "touch") {
-        return;
-      }
+/* =====================================================
+      DESKTOP ROCKET CURSOR
+      ===================================================== */
 
-      moveTouchRocket(
-        e.clientX,
-        e.clientY
-      );
+document.addEventListener(
+"mousemove",
+(e) => {
 
-      touchRocket.classList.remove(
-        "launch"
-      );
+rocketCursor.style.left =
+e.clientX + "px";
 
-      touchRocket.classList.add(
-        "touching"
-      );
+rocketCursor.style.top =
+e.clientY + "px";
 
-    }
+}
+);
 
 
-    function moveTouchRocketEvent(e) {
+/* =====================================================
+      MOBILE TOUCH ROCKET
+      ===================================================== */
 
-      if (e.pointerType !== "touch") {
-        return;
-      }
+function moveTouchRocket(x, y) {
 
-      moveTouchRocket(
-        e.clientX,
-        e.clientY
-      );
+touchRocket.style.left =
+x + "px";
 
-    }
+touchRocket.style.top =
+y + "px";
 
+}
 
-    function finishTouchRocket(e) {
 
-      if (e.pointerType !== "touch") {
-        return;
-      }
+function startTouchRocket(e) {
 
-      touchRocket.classList.remove(
-        "touching"
-      );
+if (e.pointerType !== "touch") {
+return;
+}
 
-      touchRocket.classList.remove(
-        "launch"
-      );
+moveTouchRocket(
+e.clientX,
+e.clientY
+);
 
-      void touchRocket.offsetWidth;
+touchRocket.classList.remove(
+"launch"
+);
 
-      touchRocket.classList.add(
-        "launch"
-      );
+touchRocket.classList.add(
+"touching"
+);
 
-      setTimeout(
-        () => {
+}
 
-          touchRocket.classList.remove(
-            "launch"
-          );
 
-        },
-        380
-      );
+function moveTouchRocketEvent(e) {
 
-    }
+if (e.pointerType !== "touch") {
+return;
+}
 
+moveTouchRocket(
+e.clientX,
+e.clientY
+);
 
-    function cancelTouchRocket(e) {
+}
 
-      if (e.pointerType !== "touch") {
-        return;
-      }
 
-      touchRocket.classList.remove(
-        "touching"
-      );
+function finishTouchRocket(e) {
 
-      touchRocket.classList.remove(
-        "launch"
-      );
+if (e.pointerType !== "touch") {
+return;
+}
 
-    }
+touchRocket.classList.remove(
+"touching"
+);
 
+touchRocket.classList.remove(
+"launch"
+);
 
-    document.addEventListener(
-      "pointerdown",
-      startTouchRocket
-    );
+void touchRocket.offsetWidth;
 
-    document.addEventListener(
-      "pointermove",
-      moveTouchRocketEvent
-    );
+touchRocket.classList.add(
+"launch"
+);
 
-    document.addEventListener(
-      "pointerup",
-      finishTouchRocket
-    );
+setTimeout(
+() => {
 
-    document.addEventListener(
-      "pointercancel",
-      cancelTouchRocket
-    );
+touchRocket.classList.remove(
+"launch"
+);
 
+},
+380
+);
 
-    /* =====================================================
-       OPEN INVITATION
-       ===================================================== */
+}
 
-    let invitationOpening = false;
 
-    function openInvitation() {
+function cancelTouchRocket(e) {
 
-      if (
-        invitationOpening ||
-        scene.classList.contains("spin")
-      ) {
-        return;
-      }
+if (e.pointerType !== "touch") {
+return;
+}
 
-      invitationOpening = true;
+touchRocket.classList.remove(
+"touching"
+);
 
-      /* FLIP ENVELOPE */
+touchRocket.classList.remove(
+"launch"
+);
 
-      scene.classList.add(
-        "spin"
-      );
+}
 
-      /* OPEN FLAP */
 
-      setTimeout(
-        () => {
+document.addEventListener(
+"pointerdown",
+startTouchRocket
+);
 
-          scene.classList.add(
-            "open"
-          );
+document.addEventListener(
+"pointermove",
+moveTouchRocketEvent
+);
 
-        },
-        800
-      );
+document.addEventListener(
+"pointerup",
+finishTouchRocket
+);
 
-      /* PULL CARD OUT */
+document.addEventListener(
+"pointercancel",
+cancelTouchRocket
+);
 
-      setTimeout(
-        () => {
 
-          scene.classList.add(
-            "slide"
-          );
+/* =====================================================
+      OPEN INVITATION
+      ===================================================== */
 
-          buttons.classList.add(
-            "show"
-          );
+let invitationOpening = false;
 
-          rsvpHint.style.opacity =
-            "1";
+function openInvitation() {
 
-        },
-        1600
-      );
+if (
+invitationOpening ||
+scene.classList.contains("spin")
+) {
+return;
+}
 
-    }
+invitationOpening = true;
 
+/* FLIP ENVELOPE */
 
-    /* =====================================================
-       ENVELOPE INTERACTION
-       ===================================================== */
+scene.classList.add(
+"spin"
+);
 
-    envelope.addEventListener(
-      "pointerup",
-      (e) => {
+/* OPEN FLAP */
 
-        e.stopPropagation();
+setTimeout(
+() => {
 
-        openInvitation();
+scene.classList.add(
+"open"
+);
 
-      }
-    );
+},
+800
+);
 
+/* PULL CARD OUT */
 
-    /* =====================================================
-       RSVP
-       ===================================================== */
+setTimeout(
+() => {
 
-    const phone =
-      "+16166489671";
+scene.classList.add(
+"slide"
+);
 
+buttons.classList.add(
+"show"
+);
 
-    function sendRSVP(status) {
+rsvpHint.style.opacity =
+"1";
 
-      const body =
-        `RSVP: ${status} Charlie's 7th Birthday Party.`;
+},
+1600
+);
 
-      const encoded =
-        encodeURIComponent(body);
+}
 
-      const ua =
-        navigator.userAgent || "";
 
-      const isIOS =
-        /iPad|iPhone|iPod/.test(ua);
+/* =====================================================
+      ENVELOPE INTERACTION
+      ===================================================== */
 
-      const link =
-        isIOS
-          ? `sms:${phone}&body=${encoded}`
-          : `sms:${phone}?body=${encoded}`;
+envelope.addEventListener(
+"pointerup",
+(e) => {
 
-      try {
+e.stopPropagation();
 
-        window.location.href =
-          link;
+openInvitation();
 
-      }
+}
+);
 
-      catch (err) {
 
-        alert(
-          `Please text ${phone} with: ${body}`
-        );
+/* =====================================================
+      RSVP
+      ===================================================== */
 
-      }
+const phone =
+"+16166489671";
 
-    }
 
+function sendRSVP(status) {
 
-    /* =====================================================
-       ATTENDING
-       ===================================================== */
+const body =
+`RSVP: ${status} Charlie's 7th Birthday Party.`;
 
-    attendButton.addEventListener(
-      "pointerup",
-      (e) => {
+const encoded =
+encodeURIComponent(body);
 
-        e.preventDefault();
-        e.stopPropagation();
+const ua =
+navigator.userAgent || "";
 
-        sendRSVP(
-          "Attending"
-        );
+const isIOS =
+/iPad|iPhone|iPod/.test(ua);
 
-      }
-    );
+const link =
+isIOS
+? `sms:${phone}&body=${encoded}`
+: `sms:${phone}?body=${encoded}`;
 
+try {
 
-    /* =====================================================
-       NOT ATTENDING
-       ===================================================== */
+window.location.href =
+link;
 
-    declineButton.addEventListener(
-      "pointerup",
-      (e) => {
+}
 
-        e.preventDefault();
-        e.stopPropagation();
+catch (err) {
 
-        sendRSVP(
-          "Not Attending"
-        );
+alert(
+`Please text ${phone} with: ${body}`
+);
 
-      }
-    );
+}
 
-  </script>
+}
+
+
+/* =====================================================
+      ATTENDING
+      ===================================================== */
+
+attendButton.addEventListener(
+"pointerup",
+(e) => {
+
+e.preventDefault();
+e.stopPropagation();
+
+sendRSVP(
+"Attending"
+);
+
+}
+);
+
+
+/* =====================================================
+      NOT ATTENDING
+      ===================================================== */
+
+declineButton.addEventListener(
+"pointerup",
+(e) => {
+
+e.preventDefault();
+e.stopPropagation();
+
+sendRSVP(
+"Not Attending"
+);
+
+}
+);
+
+</script>
 
 </body>
 </html>
