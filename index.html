@@ -1,7 +1,21 @@
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover"
+/>
+
 <title>CHARLIE'S BDAY</title>
 
-<meta property="og:title" content="CHARLIE'S BDAY" />
+<meta
+property="og:title"
+content="CHARLIE'S BDAY"
+/>
 
 <meta
 property="og:description"
@@ -13,7 +27,11 @@ property="og:image"
 content="https://i.imgur.com/nbBLGks.png"
 />
 
-<meta property="og:type" content="website" />
+<meta
+property="og:type"
+content="website"
+/>
+
 
 <style>
 
@@ -1359,13 +1377,6 @@ viewportWidth <=
 500;
 
 
-/*
-Only a small margin is necessary.
-
-visualViewport already removes browser
-toolbar space on iPhones.
-*/
-
 const horizontalPadding =
 mobile
 ?
@@ -1389,11 +1400,6 @@ mobile
 :
 18;
 
-
-/*
-Respect iPhone notch / home indicator
-when the browser exposes the safe area.
-*/
 
 const safeWidth =
 Math.max(
@@ -1419,12 +1425,12 @@ bottomPadding
 /*
 NO MAXIMUM SIZE CAP.
 
-This lets a laptop enlarge the design.
+Laptop = grows larger.
 
-A phone will automatically shrink it.
+Phone = automatically shrinks.
 
-Whichever dimension runs out of room first
-determines the final scale.
+The first screen edge reached determines
+the final scale.
 */
 
 const fitScale =
@@ -1440,9 +1446,7 @@ designHeight
 
 
 /*
-Tiny safety amount prevents shadows
-from touching the edge due to browser
-sub-pixel rounding.
+Tiny safety amount prevents clipping.
 */
 
 const safeScale =
@@ -1531,7 +1535,7 @@ scene.classList.add(
 
 
 /*
-Recalculate after images are fully loaded.
+Recalculate after images fully load.
 */
 
 window.addEventListener(
@@ -1574,12 +1578,6 @@ fitInvitationToScreen();
 }
 );
 
-
-/*
-Very important for iPhone Safari because
-the visible viewport changes when the
-browser bars expand/collapse.
-*/
 
 if (
 window.visualViewport
@@ -1878,9 +1876,7 @@ rsvpHint.style.opacity =
 
 
 /*
-Refit once buttons are actually visible.
-
-This makes sure Safari cannot cut them off.
+Refit after RSVP buttons appear.
 */
 
 requestAnimationFrame(
