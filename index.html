@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
 <title>CHARLIE'S 7TH BDAY</title>
 
@@ -27,6 +27,10 @@ margin: 0;
 padding: 0;
 }
 
+html {
+overflow: hidden;
+}
+
 body {
 background: #f0f2f7;
 
@@ -34,18 +38,47 @@ display: flex;
 justify-content: center;
 align-items: center;
 
+width: 100%;
+height: 100dvh;
 min-height: 100vh;
+
 overflow: hidden;
+
+padding:
+max(10px, env(safe-area-inset-top))
+max(10px, env(safe-area-inset-right))
+max(10px, env(safe-area-inset-bottom))
+max(10px, env(safe-area-inset-left));
 
 font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* =====================================================
+      MASTER FIT STAGE
+      ===================================================== */
+
+#fitStage {
+position: relative;
+
+flex: 0 0 auto;
+
+transform-origin: center center;
+
+transform: scale(var(--fit-scale, 1));
+
+will-change: transform;
+}
+
 
 /* =====================================================
       MAIN SCENE
       ===================================================== */
 
 .scene {
-position: relative;
+position: absolute;
+
+width: 320px;
 
 perspective: 1400px;
 
@@ -54,14 +87,6 @@ text-align: center;
 opacity: 0;
 
 transform: scale(0.98);
-
-/*
-  The scale is calculated automatically in JavaScript so the entire
-  envelope/card/RSVP area is as large as possible without clipping.
-  Everything scales together, so all positions and animations stay intact.
-*/
-
-transform: scale(var(--scene-pre-scale, 1));
 transform-origin: center center;
 
 transition:
@@ -73,8 +98,8 @@ transform 0.6s ease;
 opacity: 1;
 
 transform: scale(1);
-transform: scale(var(--scene-scale, 1));
 }
+
 
 /* =====================================================
       ENVELOPE
@@ -114,6 +139,7 @@ box-shadow:
 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
+
 /* =====================================================
       FRONT OF ENVELOPE
       ===================================================== */
@@ -143,6 +169,7 @@ user-select: none;
 -webkit-user-drag: none;
 }
 
+
 /* =====================================================
       BACK OF ENVELOPE
       ===================================================== */
@@ -154,6 +181,7 @@ background: linear-gradient(#ffffff, #f3f4f6);
 
 overflow: visible;
 }
+
 
 /* =====================================================
       ENVELOPE FLAP
@@ -183,6 +211,7 @@ inset 0 -3px 5px rgba(0, 0, 0, 0.15),
 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
+
 /* =====================================================
       ENVELOPE POCKET
       ===================================================== */
@@ -198,6 +227,7 @@ height: 55%;
 
 background: #f8f9fb;
 }
+
 
 /* =====================================================
       INVITATION CARD
@@ -237,6 +267,7 @@ height: 100%;
 object-fit: contain;
 }
 
+
 /* =====================================================
       ENVELOPE ANIMATION
       ===================================================== */
@@ -255,6 +286,7 @@ opacity: 1;
 transform: translate(-50%, -120%);
 }
 
+
 /* =====================================================
       RSVP HINT
       ===================================================== */
@@ -271,6 +303,7 @@ opacity: 0;
 
 transition: opacity 0.4s ease;
 }
+
 
 /* =====================================================
       RSVP BUTTONS
@@ -333,12 +366,14 @@ color: white;
 }
 
 @media (hover: hover) and (pointer: fine) {
+
 .buttons button:hover {
 box-shadow:
 0 0 15px rgba(255, 215, 0, 0.7);
 
 transform: scale(1.05);
 }
+
 }
 
 .buttons button:active {
@@ -347,6 +382,7 @@ transform: scale(0.97);
 box-shadow:
 0 0 12px rgba(255, 215, 0, 0.6);
 }
+
 
 /* =====================================================
       DESKTOP ROCKET CURSOR
@@ -357,6 +393,7 @@ display: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
+
 html,
 body,
 body *,
@@ -397,13 +434,17 @@ pointer-events: none;
 user-select: none;
 -webkit-user-drag: none;
 }
+
 }
 
 @media (hover: none), (pointer: coarse) {
+
 #rocketCursor {
 display: none !important;
 }
+
 }
+
 
 /* =====================================================
       MOBILE TOUCH ROCKET
@@ -450,6 +491,7 @@ user-select: none;
 }
 
 @media (hover: none), (pointer: coarse) {
+
 #touchRocket {
 display: block;
 }
@@ -469,13 +511,16 @@ touchRocketLaunch
 ease-out
 forwards;
 }
+
 }
+
 
 /* =====================================================
       MOBILE ROCKET LAUNCH
       ===================================================== */
 
 @keyframes touchRocketLaunch {
+
 0% {
 opacity: 1;
 
@@ -499,13 +544,20 @@ transform:
 translate(-50%, -125%)
 scale(0.88);
 }
+
 }
+
 
 /* =====================================================
       MOBILE
       ===================================================== */
 
 @media (max-width: 500px) {
+
+.scene {
+width: 300px;
+}
+
 .envelope {
 width: 300px;
 height: 216px;
@@ -520,47 +572,87 @@ height: 379px;
 width: 80%;
 max-width: 225px;
 }
+
+}
+
+
+/* =====================================================
+      VERY SMALL PHONES
+      ===================================================== */
+
+@media (max-width: 350px) {
+
+.scene {
+width: 285px;
+}
+
+.envelope {
+width: 285px;
+height: 205px;
+}
+
+.card {
+width: 250px;
+height: 357px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
+
 <!-- =====================================================
       DESKTOP ROCKET CURSOR
       ===================================================== -->
 
 <div id="rocketCursor">
+
 <img
 src="https://i.imgur.com/vkgyQTf.png"
 alt=""
 />
+
 </div>
+
 
 <!-- =====================================================
       MOBILE TOUCH ROCKET
       ===================================================== -->
 
 <div id="touchRocket">
+
 <img
 src="https://i.imgur.com/vkgyQTf.png"
 alt=""
 />
+
 </div>
+
+
+<!-- =====================================================
+      MASTER FIT STAGE
+      ===================================================== -->
+
+<div id="fitStage">
+
 
 <!-- =====================================================
       INVITATION
       ===================================================== -->
 
 <div
-class="scene ready"
+class="scene"
 id="scene"
 >
+
 
 <div
 class="envelope"
 id="envelope"
 >
+
 
 <!-- FRONT OF ENVELOPE -->
 
@@ -574,6 +666,7 @@ class="invite-title"
 
 </div>
 
+
 <!-- BACK OF ENVELOPE -->
 
 <div class="face back">
@@ -584,7 +677,9 @@ class="invite-title"
 
 </div>
 
+
 </div>
+
 
 <!-- INVITATION CARD -->
 
@@ -600,6 +695,7 @@ alt="Charlie's 7th Birthday Invitation"
 
 </div>
 
+
 <!-- RSVP TEXT -->
 
 <div
@@ -608,6 +704,7 @@ id="rsvpHint"
 >
 Tap to RSVP
 </div>
+
 
 <!-- RSVP BUTTONS -->
 
@@ -634,12 +731,19 @@ Not Attending
 
 </div>
 
+
 </div>
+
+</div>
+
 
 <script>
 /* =====================================================
       ELEMENTS
       ===================================================== */
+
+const fitStage =
+document.getElementById("fitStage");
 
 const scene =
 document.getElementById("scene");
@@ -667,8 +771,8 @@ document.getElementById("declineButton");
 
 
 /* =====================================================
-   MAXIMUM SAFE INVITATION SCALE
-   ===================================================== */
+      MEASURE ENTIRE DESIGN
+      ===================================================== */
 
 function measureSceneState(openState = false) {
 
@@ -677,9 +781,14 @@ scene.cloneNode(true);
 
 clone.removeAttribute("id");
 
-clone.querySelectorAll("[id]").forEach((el) => {
+clone
+.querySelectorAll("[id]")
+.forEach((el) => {
+
 el.removeAttribute("id");
+
 });
+
 
 clone.classList.remove(
 "ready",
@@ -687,6 +796,7 @@ clone.classList.remove(
 "open",
 "slide"
 );
+
 
 if (openState) {
 
@@ -702,53 +812,119 @@ clone.querySelector(".buttons");
 const cloneHint =
 clone.querySelector(".rsvp-hint");
 
+
 if (cloneButtons) {
-cloneButtons.classList.add("show");
+
+cloneButtons.classList.add(
+"show"
+);
+
 }
+
 
 if (cloneHint) {
-cloneHint.style.opacity = "1";
-}
+
+cloneHint.style.opacity =
+"1";
 
 }
 
-clone.style.position = "fixed";
-clone.style.left = "0";
-clone.style.top = "0";
-clone.style.width = scene.offsetWidth + "px";
-clone.style.opacity = "1";
-clone.style.visibility = "hidden";
-clone.style.pointerEvents = "none";
-clone.style.transform = "none";
-clone.style.transition = "none";
-clone.style.zIndex = "-999999";
+}
 
-document.body.appendChild(clone);
 
-const cloneRect =
+/*
+Put the measuring copy outside the actual layout.
+*/
+
+clone.style.position =
+"fixed";
+
+clone.style.left =
+"0";
+
+clone.style.top =
+"0";
+
+clone.style.opacity =
+"1";
+
+clone.style.visibility =
+"hidden";
+
+clone.style.pointerEvents =
+"none";
+
+clone.style.transform =
+"none";
+
+clone.style.transition =
+"none";
+
+clone.style.zIndex =
+"-999999";
+
+
+document.body.appendChild(
+clone
+);
+
+
+const baseRect =
 clone.getBoundingClientRect();
 
-let minLeft = cloneRect.left;
-let maxRight = cloneRect.right;
-let minTop = cloneRect.top;
-let maxBottom = cloneRect.bottom;
 
-clone
-.querySelectorAll("*")
-.forEach((el) => {
+let minLeft =
+Infinity;
+
+let maxRight =
+-Infinity;
+
+let minTop =
+Infinity;
+
+let maxBottom =
+-Infinity;
+
+
+const allElements =
+Array.from(
+clone.querySelectorAll("*")
+);
+
+
+allElements.forEach((el) => {
 
 const style =
 window.getComputedStyle(el);
 
+
+/*
+Ignore elements that truly are not displayed.
+*/
+
+if (style.display === "none") {
+return;
+}
+
+
+/*
+When measuring the CLOSED envelope,
+ignore the invisible card and RSVP pieces.
+*/
+
 if (
-style.display === "none" ||
-style.visibility === "hidden"
+!openState &&
+el.closest(
+".card, .rsvp-hint, .buttons"
+)
 ) {
 return;
 }
 
+
 const rect =
 el.getBoundingClientRect();
+
 
 if (
 rect.width === 0 &&
@@ -757,38 +933,69 @@ rect.height === 0
 return;
 }
 
+
 minLeft =
-Math.min(minLeft, rect.left);
+Math.min(
+minLeft,
+rect.left
+);
 
 maxRight =
-Math.max(maxRight, rect.right);
+Math.max(
+maxRight,
+rect.right
+);
 
 minTop =
-Math.min(minTop, rect.top);
+Math.min(
+minTop,
+rect.top
+);
 
 maxBottom =
-Math.max(maxBottom, rect.bottom);
+Math.max(
+maxBottom,
+rect.bottom
+);
 
 });
 
+
 clone.remove();
 
+
 return {
-width: maxRight - minLeft,
-height: maxBottom - minTop
+
+left:
+minLeft - baseRect.left,
+
+right:
+maxRight - baseRect.left,
+
+top:
+minTop - baseRect.top,
+
+bottom:
+maxBottom - baseRect.top
+
 };
 
 }
 
 
-function setMaximumSafeScale() {
+/* =====================================================
+      MAXIMUM SAFE FIT
+      ===================================================== */
+
+function fitInvitationToScreen() {
 
 /*
-  Leave a small breathing room around the edges so browser rounding,
-  shadows and mobile safe areas never clip the invitation.
-*/
+Measure BOTH the closed envelope and
+the fully opened invitation.
 
-const edgePadding = 16;
+That means the scaling includes every
+part of the animation.
+*/
 
 const closed =
 measureSceneState(false);
@@ -796,80 +1003,228 @@ measureSceneState(false);
 const opened =
 measureSceneState(true);
 
-const designWidth =
-Math.max(
-closed.width,
-opened.width
+
+/*
+Create one bounding box that contains
+the entire animation from beginning to end.
+*/
+
+let left =
+Math.min(
+closed.left,
+opened.left
 );
 
-const designHeight =
+let right =
 Math.max(
-closed.height,
-opened.height
+closed.right,
+opened.right
 );
+
+let top =
+Math.min(
+closed.top,
+opened.top
+);
+
+let bottom =
+Math.max(
+closed.bottom,
+opened.bottom
+);
+
+
+/*
+Tiny internal buffer for shadows and
+sub-pixel browser rounding.
+*/
+
+const designBuffer =
+8;
+
+left -= designBuffer;
+right += designBuffer;
+top -= designBuffer;
+bottom += designBuffer;
+
+
+const designWidth =
+right - left;
+
+const designHeight =
+bottom - top;
+
+
+/*
+Make the outer stage EXACTLY the size
+of the entire invitation footprint.
+*/
+
+fitStage.style.width =
+designWidth + "px";
+
+fitStage.style.height =
+designHeight + "px";
+
+
+/*
+Move the scene inside that stage so the
+whole design is mathematically centered.
+
+This does NOT change any positions inside
+the invitation itself.
+*/
+
+scene.style.left =
+(-left) + "px";
+
+scene.style.top =
+(-top) + "px";
+
+
+/*
+Use the real visible viewport.
+This is particularly important on iPhones
+and mobile Safari.
+*/
+
+const viewportWidth =
+window.visualViewport
+? window.visualViewport.width
+: window.innerWidth;
+
+const viewportHeight =
+window.visualViewport
+? window.visualViewport.height
+: window.innerHeight;
+
+
+/*
+Small screen-edge buffer.
+
+The invitation still gets almost the
+entire screen, but shadows cannot clip.
+*/
+
+const edgePadding =
+window.innerWidth <= 500
+? 10
+: 14;
+
 
 const availableWidth =
 Math.max(
 1,
-window.innerWidth -
+viewportWidth -
 edgePadding * 2
 );
 
 const availableHeight =
 Math.max(
 1,
-window.innerHeight -
+viewportHeight -
 edgePadding * 2
 );
 
-const maxScale =
+
+/*
+THIS IS WHAT MAKES IT AS LARGE AS POSSIBLE.
+
+There is intentionally NO scale cap.
+
+If the screen has room, the invitation grows.
+If the screen is smaller, it shrinks.
+
+Whichever dimension reaches the screen edge
+first determines the final size.
+*/
+
+const fitScale =
 Math.min(
 availableWidth / designWidth,
 availableHeight / designHeight
 );
 
+
 /*
-  Use essentially the full safe size.
-  The tiny 0.99 factor protects against sub-pixel rounding.
+Tiny safety factor prevents one-pixel clipping.
 */
 
 const safeScale =
-maxScale * 0.99;
+fitScale * 0.985;
 
-const preScale =
-safeScale * 0.98;
 
-scene.style.setProperty(
-"--scene-scale",
+fitStage.style.setProperty(
+"--fit-scale",
 safeScale.toFixed(4)
-);
-
-scene.style.setProperty(
-"--scene-pre-scale",
-preScale.toFixed(4)
 );
 
 }
 
 
-setMaximumSafeScale();
+/* =====================================================
+      INITIAL FIT
+      ===================================================== */
+
+fitInvitationToScreen();
+
+
+requestAnimationFrame(() => {
+
+fitInvitationToScreen();
+
+scene.classList.add(
+"ready"
+);
+
+});
+
+
+/*
+Run again after all images finish loading.
+*/
+
+window.addEventListener(
+"load",
+() => {
+
+fitInvitationToScreen();
+
+}
+);
+
+
+/* =====================================================
+      RESPONSIVE REFIT
+      ===================================================== */
 
 window.addEventListener(
 "resize",
-setMaximumSafeScale
+fitInvitationToScreen
 );
+
 
 window.addEventListener(
 "orientationchange",
 () => {
 
 setTimeout(
-setMaximumSafeScale,
+fitInvitationToScreen,
 120
 );
 
 }
 );
+
+
+if (window.visualViewport) {
+
+window.visualViewport.addEventListener(
+"resize",
+fitInvitationToScreen
+);
+
+}
 
 
 /* =====================================================
@@ -961,6 +1316,7 @@ touchRocket.classList.add(
 "launch"
 );
 
+
 setTimeout(
 () => {
 
@@ -1017,7 +1373,9 @@ cancelTouchRocket
       OPEN INVITATION
       ===================================================== */
 
-let invitationOpening = false;
+let invitationOpening =
+false;
+
 
 function openInvitation() {
 
@@ -1028,13 +1386,17 @@ scene.classList.contains("spin")
 return;
 }
 
-invitationOpening = true;
+
+invitationOpening =
+true;
+
 
 /* FLIP ENVELOPE */
 
 scene.classList.add(
 "spin"
 );
+
 
 /* OPEN FLAP */
 
@@ -1048,6 +1410,7 @@ scene.classList.add(
 },
 800
 );
+
 
 /* PULL CARD OUT */
 
@@ -1110,10 +1473,12 @@ navigator.userAgent || "";
 const isIOS =
 /iPad|iPhone|iPod/.test(ua);
 
+
 const link =
 isIOS
 ? `sms:${phone}&body=${encoded}`
 : `sms:${phone}?body=${encoded}`;
+
 
 try {
 
